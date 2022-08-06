@@ -1,29 +1,28 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
-<?php 
-		if(!isset($_GET['movie_id'])){
-			header('Location:movielisting.php?movie_id=false');
-		}else{
-			$query = "SELECT * FROM movies WHERE movie_id = '{$_GET['movie_id']}' AND is_deleted = 0 LIMIT 1";
-			$result = mysqli_query($connection, $query);
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
+<?php
+if (!isset($_GET['movie_id'])) {
+    header('Location:movielisting.php?movie_id=false');
+} else {
+    $query  = "SELECT * FROM movies WHERE movie_id = '{$_GET['movie_id']}' AND is_deleted = 0 LIMIT 1";
+    $result = mysqli_query($connection, $query);
 
-			if(mysqli_num_rows($result) == 1){
+    if (mysqli_num_rows($result) == 1) {
 
-				$query = "SELECT * FROM movies WHERE movie_id = '{$_GET['movie_id']}' LIMIT 1";
-				$result = mysqli_query($connection, $query);
+        $query  = "SELECT * FROM movies WHERE movie_id = '{$_GET['movie_id']}' LIMIT 1";
+        $result = mysqli_query($connection, $query);
 
-				if($result){
-					$data = mysqli_fetch_assoc($result);
-				}else{
-					header('Location:movielisting.php?retrive=false');
-				}
-			}else{
-				header('Location:movielisting.php?is_deleted_or_not uploaded=true');
-			}
+        if ($result) {
+            $data = mysqli_fetch_assoc($result);
+        } else {
+            header('Location:movielisting.php?retrive=false');
+        }
+    } else {
+        header('Location:movielisting.php?is_deleted_or_not uploaded=true');
+    }
 
-
-		}
+}
 
 ?>
 
@@ -41,7 +40,7 @@
 
 <body>
 
-    <?php require_once('inc/hedersingle.php'); ?>
+    <?php require_once 'inc/hedersingle.php';?>
 
 
 
@@ -64,18 +63,18 @@
             <h5><i class="fas fa-star"></i> <?php echo $data['ratings']; ?>/10 </h5>
 
             <h4>Rate this movie:
-                <?php 
-				$stars = 0;
-				$empstars = 0;
-				while ($stars < $data['ratings']) {
-					?><i class="fas fa-star"></i><?php
-					$stars++;
-				}
-				while($empstars < 10 - $data['ratings']){
-					?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
-					$empstars++;
-				}
-			?></h4>
+                <?php
+$stars    = 0;
+$empstars = 0;
+while ($stars < $data['ratings']) {
+    ?><i class="fas fa-star"></i><?php
+$stars++;
+}
+while ($empstars < 10 - $data['ratings']) {
+    ?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
+$empstars++;
+}
+?></h4>
 
         </div>
         <!--Ratingbar-->
@@ -90,7 +89,7 @@
 
 
 
-    <?php require_once('inc/hederfinal.php'); ?>
+    <?php require_once 'inc/hederfinal.php';?>
 
 
     <div class="Content">
@@ -104,10 +103,10 @@
         <div class="Cont-R">
             <div class="Items">
                 <ul>
-                    <li><a href="<?php echo("singlemovie.php?movie_id={$_GET['movie_id']}") ?>">OVERVIEW</a></li>
-                    <li><a href="<?php echo("singlemovie-review.php?movie_id={$_GET['movie_id']}") ?>">REVIEWS</a></li>
-                    <li><a href="<?php echo("singlemovie-media.php?movie_id={$_GET['movie_id']}") ?>">MEDIA</a></li>
-                    <li><a href="<?php echo("singlemovie-relatedmovies.php?movie_id={$_GET['movie_id']}") ?>">RELATED
+                    <li><a href="<?php echo ("singlemovie.php?movie_id={$_GET['movie_id']}") ?>">OVERVIEW</a></li>
+                    <li><a href="<?php echo ("singlemovie-review.php?movie_id={$_GET['movie_id']}") ?>">REVIEWS</a></li>
+                    <li><a href="<?php echo ("singlemovie-media.php?movie_id={$_GET['movie_id']}") ?>">MEDIA</a></li>
+                    <li><a href="<?php echo ("singlemovie-relatedmovies.php?movie_id={$_GET['movie_id']}") ?>">RELATED
                             MOVIES</a></li>
                 </ul>
             </div>
@@ -149,7 +148,7 @@
                 <h5>Run time:</h5>
                 <h6><?php echo $data['run_time']; ?>Mins</h6>
                 <h5>IMDB rating:</h5>
-                <h6><?php echo $data['ratings'].'/10'; ?></h6>
+                <h6><?php echo $data['ratings'] . '/10'; ?></h6>
 
                 <div class="Advertiesment1">
                     <img src="img/LatestMv/slider4.jpg" align="Advertiesment1">
@@ -175,13 +174,13 @@
 
 
 
-    <?php require_once('inc/footer.php') ?>
+    <?php require_once 'inc/footer.php'?>
 
-    <?php require_once('inc/signup.php') ?>
+    <?php require_once 'inc/signup.php'?>
 
-    <?php require_once('inc/login.php') ?>
+    <?php require_once 'inc/login.php'?>
 
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

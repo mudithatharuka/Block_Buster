@@ -1,9 +1,9 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
 <?php
-	if(!isset($_SESSION['admin_id'])){
-		header('Location:adminlogin.php?has_logged=false');
-	}
+if (!isset($_SESSION['admin_id'])) {
+    header('Location:adminlogin.php?has_logged=false');
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,8 @@
     <header>
         <div class="Sitename">BLOCK BUSTER</div>
         <!--Sitename-->
-        <div class="Loggedin">Welcome Admin <?php echo $_SESSION['name'];?>! <a href="adminlogout.php">Log Out</a></div>
+        <div class="Loggedin">Welcome Admin <?php echo $_SESSION['name']; ?>! <a href="adminlogout.php">Log Out</a>
+        </div>
     </header>
 
     <div class="Content">

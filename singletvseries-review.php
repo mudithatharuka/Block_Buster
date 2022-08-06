@@ -1,25 +1,23 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
-<?php 
-		if(!isset($_GET['series_id'])){
-			header('Location:tvserieslisting.php?series_id=false');
-		}else{
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
+<?php
+if (!isset($_GET['series_id'])) {
+    header('Location:tvserieslisting.php?series_id=false');
+} else {
 
-			$query = "SELECT * FROM tvseries WHERE series_id = '{$_GET['series_id']}' LIMIT 1";
-			$result = mysqli_query($connection, $query);
+    $query  = "SELECT * FROM tvseries WHERE series_id = '{$_GET['series_id']}' LIMIT 1";
+    $result = mysqli_query($connection, $query);
 
-			if($result){
-				$data = mysqli_fetch_assoc($result);
-			}else{
-				header('Location:tvserieslisting.php?retrive=false');
-			}
+    if ($result) {
+        $data = mysqli_fetch_assoc($result);
+    } else {
+        header('Location:tvserieslisting.php?retrive=false');
+    }
 
-		}
+}
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -33,15 +31,15 @@
 
 <body>
 
-    <?php require_once('inc/hedersingletvseries.php'); ?>
+    <?php require_once 'inc/hedersingletvseries.php';?>
 
 
-    <?php if(isset($_GET['user_login']) && $_GET['user_login'] == 'false'){
-		echo '<p class ="error">Please Log In First</p>';
-	} ?>
-    <?php if(isset($_GET['review_added_sucessfully']) && $_GET['review_added_sucessfully'] == 'true'){
-		echo '<p class ="cool">Review Added Sucessfully.</p>';
-	} ?>
+    <?php if (isset($_GET['user_login']) && $_GET['user_login'] == 'false') {
+    echo '<p class ="error">Please Log In First</p>';
+}?>
+    <?php if (isset($_GET['review_added_sucessfully']) && $_GET['review_added_sucessfully'] == 'true') {
+    echo '<p class ="cool">Review Added Sucessfully.</p>';
+}?>
 
 
 
@@ -64,18 +62,18 @@
             <h5><i class="fas fa-star"></i> <?php echo $data['ratings']; ?>/10 </h5>
 
             <h4>Rate this TV series:
-                <?php 
-				$stars = 0;
-				$empstars = 0;
-				while ($stars < $data['ratings']) {
-					?><i class="fas fa-star"></i><?php
-					$stars++;
-				}
-				while($empstars < 10 - $data['ratings']){
-					?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
-					$empstars++;
-				}
-			?></h4>
+                <?php
+$stars    = 0;
+$empstars = 0;
+while ($stars < $data['ratings']) {
+    ?><i class="fas fa-star"></i><?php
+$stars++;
+}
+while ($empstars < 10 - $data['ratings']) {
+    ?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
+$empstars++;
+}
+?></h4>
         </div>
         <!--Ratingbar-->
         <div class="balance">
@@ -89,7 +87,7 @@
 
 
 
-    <?php require_once('inc/hederfinal.php'); ?>
+    <?php require_once 'inc/hederfinal.php';?>
 
 
     <div class="Content">
@@ -103,12 +101,12 @@
         <div class="Cont-R">
             <div class="Items">
                 <ul>
-                    <li><a href="<?php echo("singletvseries.php?series_id={$_GET['series_id']}") ?>">OVERVIEW</a></li>
-                    <li><a href="<?php echo("singletvseries-review.php?series_id={$_GET['series_id']}") ?>">REVIEWS</a>
+                    <li><a href="<?php echo ("singletvseries.php?series_id={$_GET['series_id']}") ?>">OVERVIEW</a></li>
+                    <li><a href="<?php echo ("singletvseries-review.php?series_id={$_GET['series_id']}") ?>">REVIEWS</a>
                     </li>
-                    <li><a href="<?php echo("singletvseries-media.php?series_id={$_GET['series_id']}") ?>">MEDIA</a>
+                    <li><a href="<?php echo ("singletvseries-media.php?series_id={$_GET['series_id']}") ?>">MEDIA</a>
                     </li>
-                    <li><a href="<?php echo("singletvseries-relatedtvseries.php?series_id={$_GET['series_id']}") ?>">RELATED
+                    <li><a href="<?php echo ("singletvseries-relatedtvseries.php?series_id={$_GET['series_id']}") ?>">RELATED
                             SERIES</a></li>
                 </ul>
             </div>
@@ -130,12 +128,11 @@
 
             <?php
 
+$query_review  = "SELECT * FROM tsrreviews WHERE post_id = '{$_GET['series_id']}' AND is_deleted = 0";
+$result_review = mysqli_query($connection, $query_review);
+$num_reviews   = mysqli_num_rows($result_review);
 
-			$query_review = "SELECT * FROM tsrreviews WHERE post_id = '{$_GET['series_id']}' AND is_deleted = 0";
-			$result_review = mysqli_query($connection, $query_review);
-			$num_reviews = mysqli_num_rows($result_review);
-
-			?>
+?>
 
 
             <div class="All-reviews">
@@ -151,18 +148,17 @@
 
             <?php
 
-			if($result_review && $num_reviews > 0){
-				while ($data_review = mysqli_fetch_assoc($result_review)) {
-				
-					$query_user = "SELECT * FROM users WHERE user_id = '{$data_review['user_id']}' LIMIT 1";
-					$result_user = mysqli_query($connection, $query_user);
+if ($result_review && $num_reviews > 0) {
+    while ($data_review = mysqli_fetch_assoc($result_review)) {
 
-						if($result_user){
+        $query_user  = "SELECT * FROM users WHERE user_id = '{$data_review['user_id']}' LIMIT 1";
+        $result_user = mysqli_query($connection, $query_user);
 
-							$data_user = mysqli_fetch_assoc($result_user);
+        if ($result_user) {
 
-					
-					?>
+            $data_user = mysqli_fetch_assoc($result_user);
+
+            ?>
 
 
 
@@ -174,12 +170,12 @@
                     <h3><?php echo $data_review['r_name']; ?></h3>
                     <h5><?php
 
-							$i = 0;
-							while ($i < $data_review['ratings']) {
-								echo'<i class="fas fa-star"></i>';
-								$i++;
-							}
-						?></h5>
+            $i = 0;
+            while ($i < $data_review['ratings']) {
+                echo '<i class="fas fa-star"></i>';
+                $i++;
+            }
+            ?></h5>
                     <h6><?php echo $data_review['u_date_time']; ?></h6>
                     <h4><?php echo $data_user['name']; ?></h4>
                 </div>
@@ -200,29 +196,27 @@
 
             <?php
 
-						}else{
-							header('Location:tvserieslisting.php?user_in_review_retrive=false');			
-						}
-				}
+        } else {
+            header('Location:tvserieslisting.php?user_in_review_retrive=false');
+        }
+    }
 
+} else {
+    if ($num_reviews == 0) {
 
-			}else{
-				if($num_reviews == 0){
-
-				?>
+        ?>
 
 
 
             <?php
 
-				}else{
-					header('Location:tvserieslisting.php?review_retrive=false');
+    } else {
+        header('Location:tvserieslisting.php?review_retrive=false');
 
-				}
-			}
+    }
+}
 
-
-			?>
+?>
 
 
 
@@ -241,13 +235,13 @@
 
 
 
-    <?php require_once('inc/footer.php') ?>
+    <?php require_once 'inc/footer.php'?>
 
-    <?php require_once('inc/signup.php') ?>
+    <?php require_once 'inc/signup.php'?>
 
-    <?php require_once('inc/login.php') ?>
+    <?php require_once 'inc/login.php'?>
 
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

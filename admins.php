@@ -1,50 +1,50 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 <?php
-	if(!isset($_SESSION['admin_id'])){
-		header('Location:adminlogin.php?has_logged=false');
-	}
+if (!isset($_SESSION['admin_id'])) {
+    header('Location:adminlogin.php?has_logged=false');
+}
 ?>
 <?php
 
-	if($_SESSION['admin_id'] != "ADM_001"){
-		header('Location:adminhome.php?is_the_owner=false');
-	}
+if ($_SESSION['admin_id'] != "ADM_001") {
+    header('Location:adminhome.php?is_the_owner=false');
+}
 
 ?>
 <?php
 
-	$admins_list = '';
+$admins_list = '';
 
-	//Getting the admins
-	$query = "SELECT * FROM admins WHERE is_deleted = 0 ORDER BY admin_id";
-	$admins = mysqli_query($connection, $query);
+//Getting the admins
+$query  = "SELECT * FROM admins WHERE is_deleted = 0 ORDER BY admin_id";
+$admins = mysqli_query($connection, $query);
 
-	if($admins){
+if ($admins) {
 
-		if(mysqli_num_rows($admins) > 0){
+    if (mysqli_num_rows($admins) > 0) {
 
-			while ($admin = mysqli_fetch_assoc($admins)) {
-				
-				$admins_list.="<tr>";
-				$admins_list.="<td>{$admin['admin_id']}</td>";
-				$admins_list.="<td>{$admin['name']}</td>";
-				$admins_list.="<td>{$admin['email']}</td>";
-				$admins_list.="<td>+{$admin['contact_no']}</td>";
-				$admins_list.="<td>{$admin['last_login']}</td>";
-				$admins_list.="<td><a href=\"modify-admin.php?admin_id={$admin['admin_id']}\"> <button class=\"edt\">Edit</button> </a></td>";
-				$admins_list.="<td><a href=\"delete-admin.php?admin_id={$admin['admin_id']}\"> <button class=\"del\">Delete</button> </a></td>";
-				$admins_list.="</tr>";
-			}
+        while ($admin = mysqli_fetch_assoc($admins)) {
 
-		}else{
-			echo "No admins to display";
-		}
+            $admins_list .= "<tr>";
+            $admins_list .= "<td>{$admin['admin_id']}</td>";
+            $admins_list .= "<td>{$admin['name']}</td>";
+            $admins_list .= "<td>{$admin['email']}</td>";
+            $admins_list .= "<td>+{$admin['contact_no']}</td>";
+            $admins_list .= "<td>{$admin['last_login']}</td>";
+            $admins_list .= "<td><a href=\"modify-admin.php?admin_id={$admin['admin_id']}\"> <button class=\"edt\">Edit</button> </a></td>";
+            $admins_list .= "<td><a href=\"delete-admin.php?admin_id={$admin['admin_id']}\"> <button class=\"del\">Delete</button> </a></td>";
+            $admins_list .= "</tr>";
+        }
 
-	}else{
-		echo "Database query failed";
-	}
+    } else {
+        echo "No admins to display";
+    }
+
+} else {
+    echo "Database query failed";
+}
 
 ?>
 
@@ -60,7 +60,7 @@
 <body>
     <div class="Wrapper">
 
-        <?php require_once('inc/adminheader.php') ?>
+        <?php require_once 'inc/adminheader.php'?>
 
 
         <main>
