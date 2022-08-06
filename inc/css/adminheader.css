@@ -1,0 +1,95 @@
+
+header{
+	background-color: #375051;
+	overflow: auto;      
+	padding: 15px 1%;
+	position: sticky;
+	top: 0;
+	/*border-bottom: 1px solid #808080;*/
+}
+
+header .Sitename{
+	float: left;
+	font-weight: bold;
+	font-size: 20px;
+	padding: 2.5px 0;
+}
+header a button{
+	font-weight: bold;
+	padding: 5px 15px;
+	color: #fff;
+	border: 1px solid #790001;
+	border-radius: 15px;
+	background-color: #790001;
+	transition: .4s;
+}
+header a button:hover{
+	cursor: pointer;
+	background-color: #dd003f;
+}
+header .Loggedin{
+	float: right;
+}
+header i:hover{
+	transition: .4s;
+	cursor: pointer;
+	color: #dd003f;
+}
+
+.Choosehead{
+	position: sticky;
+	top: 70px;
+}
+.Choosehead ul{
+	display: none;
+	position: absolute;
+	padding: 20px 15px;
+	float: left;
+}
+.Choosehead ul li{
+	display: block;
+	margin-bottom: 10px;
+	position: relative;
+}
+.Choosehead ul li a button{
+	width: 120px;
+	padding: 4px;
+	border: none;
+	border-radius: 20px;
+	font-family: cursive;
+	color: #fff;
+	background-color: #293940;
+	transition: .4s;
+}
+.Choosehead ul li a  button.Movies:hover{
+	background-color: #2196F3;
+	cursor: pointer;
+}
+.Choosehead ul li a  button.Tv:hover{
+	background-color: #FBB117;
+	cursor: pointer;
+}
+.Choosehead ul li a  button.Movie:hover{
+	background-color: #12b5bc;
+	cursor: pointer;
+}
+.Choosehead ul li a  button.Series:hover{
+	background-color: #ddbc1f;
+	cursor: pointer;
+}
+.Choosehead ul li a  button.Latest:hover{
+	background-color: #FF1100;
+	cursor: pointer;
+}
+.Choosehead ul li a  button.Celebrities:hover{
+	background-color: #d6762e;
+	cursor: pointer;
+}
+.Choosehead ul li a  button.Users:hover{
+	background-color: #03C04A;
+	cursor: pointer;
+}
+.Choosehead ul li a  button.Admins:hover{
+	background-color: #a741a2;
+	cursor: pointer;
+}

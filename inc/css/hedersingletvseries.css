@@ -1,0 +1,172 @@
+* {margin: 0; padding: 0;}
+.clearfix{overflow: auto;}
+a {text-decoration: none;}
+*:hover{
+	transition: .4s;
+}
+body{
+	background-color: #020d18;
+	font-family: sans-serif;
+}
+.Body{
+	
+	margin: 0 auto;
+	width: 75%;
+}
+
+
+
+
+.Background{
+	background:url(../img/wallpapersden.com_nairobi-from-money-heist_2560x1440.jpg);
+	background-size: cover;
+	background-position: center;
+
+}
+.Header{
+	background-color: rgba(1,13,35,0.85);
+	
+	
+
+}
+
+.NavBar{
+	padding-top: 30px;
+	font-weight: bold;
+	position: sticky;
+	top: 0;
+
+}
+.NavBar img{
+	float: left;
+}
+
+.NavBar .List1 ul li{
+
+	font-size: 14px;
+	margin-left: 4%;
+	padding-top: 20px;
+	float: left;
+	display: inline-block;
+}
+.NavBar ul li a{
+	color: #a7b4c2;
+
+}
+.NavBar .List2 ul li{
+	margin-left: 4%;
+	font-size: 14px;
+	padding-top: 20px;
+	display: inline-block;
+	float: right;
+}
+.NavBar .List2 ul li:first-child{
+	background-color: #dd003f;
+	
+	margin-left: 2%;
+	padding: 12px 2.3%;
+	margin-top: 8px;
+	border-radius: 20px;
+}
+.NavBar .List2 ul li button{
+	background-color: transparent;
+	border: none;
+	font-weight: bold;
+	font-family: sans-serif;
+	font-size: 14px;
+	color: #fff;
+
+}
+.NavBar .List2 ul li button:hover{
+	cursor: pointer;
+
+}
+.NavBar .List3 ul li{
+	margin-left: 4%;
+	font-size: 14px;
+	padding-top: 20px;
+	display: inline-block;
+	float: right;
+}
+.NavBar .List3 ul li:first-child{
+	background-color: #dd003f;
+	margin-left: 2%;
+	padding: 6px 0.7% 6px 6%;
+	margin-top: 8px;
+	border-radius: 20px;
+}
+.NavBar .List3 ul li i{
+	/*background-color: #dd003f;
+	
+	margin-left: 2%;
+	padding: 12px 2.3%;
+	margin-top: 8px;
+	border-radius: 20px;*/
+	margin-left: 1%;
+	font-size: 30px;
+	text-align: right;
+	/*margin-left: 100%;*/
+}
+.NavBar .List3 ul li button{
+	background-color: transparent;
+	border: none;
+	font-weight: bold;
+	font-family: sans-serif;
+	font-size: 14px;
+	color: #fff;
+
+}
+.NavBar .List3 ul li button:hover{
+	cursor: pointer;
+
+}
+.Search{
+	width: 75%;
+	margin-top: 30px;
+	margin: 30px auto 0 auto;
+}
+.Search select{
+	color: #fff;
+	background-color: #233a50;
+	height: 39.4px;
+	border: 2px solid black;
+	border-bottom: 2px solid black;
+	width: 9%;
+	float: left;
+}
+.Search input{
+	height: 35px;
+	background-color: #233a50;
+	border: 2px solid black;
+	border-bottom: 2px solid black;
+	width: 86.36%;
+	float: left;
+}
+.Search button{
+	background-color: #233a50;
+	border: 2px solid black;
+	border-bottom: 2px solid black;
+	float: right;
+	height:39px;
+	width: 4%;
+}
+
+.SocialMedia{
+	
+	
+	
+	color: #fff;
+	font-family: sans-serif;
+	font-weight: bold;
+	margin-top: 35px;
+	margin-bottom: 25px;
+	float: right;
+	margin-right: 12.8%;
+}
+.SocialMedia i{
+	padding-left: 10px;
+}
+.SocialMedia i:hover{
+	cursor: pointer;
+	color: #dd003f;
+}
