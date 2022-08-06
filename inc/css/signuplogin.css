@@ -1,0 +1,157 @@
+* {margin: 0; padding: 0;}
+.clearfix{overflow: auto;}
+a {text-decoration: none;}
+*:hover{
+	transition: .4s;
+}
+body{
+	background-color: #020d18;
+	font-family: sans-serif;
+}
+.Body{
+	
+	margin: 0 auto;
+	width: 75%;
+}
+
+
+
+.signup , .login{
+	position: sticky;
+
+}
+
+.bg-modal{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+	
+	position: absolute;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	display: none;
+
+}
+.bg-modal2{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+	
+	position: absolute;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	display: none;
+
+}
+.modal-content{
+	width: 30%;
+	height: 600px;
+	background-color: #fff;
+	margin-top: 60px;
+	position: sticky;
+	top: 60px;
+	border-radius: 5px;
+	
+}
+.modal-content h1{
+	padding-top: 40px;
+	padding-bottom: 30px;
+	font-family: sans-serif;
+	text-align: center;
+}
+.modal-content form h5{
+	margin-left: 10%;
+	font-family: sans-serif;
+}
+.modal-content form input{
+
+
+	height: 37px;
+	width: 80%;
+	display: block;
+	margin: 10px auto 30px auto;
+
+}
+.modal-content form label{
+	margin-left: 10%;
+	text-align: left;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+}
+.modal-content form button{
+	height: 43px;
+	margin: 5px 9.5% 50px 9.5%;
+	width: 81%;
+	background-color: #dd003f;
+	color: #fff;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 14px;
+	border: none;
+}
+.log-by{
+	
+}
+.modal-content form .log-fb{
+	width: 34.8%;
+	background-color: #4267B2;
+	margin: 0;
+	color: #fff;
+	margin: 15px 10% 10px 9.5%;
+	border-radius: 4px;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 14px;
+}
+.modal-content form .log-twitter{
+	width: 34.8%;
+	background-color: #1DA1F2;
+	margin: 15px 0 10px 0;
+	color: #fff;
+	border-radius: 4px;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 14px;
+}
+.modal-content form button{
+	cursor: pointer;
+}
+.modal-content form .hint input{
+
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid grey;
+	color: #dd003f;
+	margin: 0;
+	margin-left: 10%;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+	text-align: left;
+	padding: 0;
+}
+.modal-content form .hint input:hover{
+	cursor: pointer;
+	border-bottom: 1px solid #dd003f;
+}
+.close{
+	position: absolute;
+	right: 3%;
+	margin-top: 5px;
+	font-size: 35px;
+	transform: rotate(45deg);
+	cursor: pointer;
+	font-weight: bold;
+}
+.close2{
+	position: absolute;
+	right: 3%;
+	margin-top: 5px;
+	font-size: 35px;
+	transform: rotate(45deg);
+	cursor: pointer;
+	font-weight: bold;
+}
