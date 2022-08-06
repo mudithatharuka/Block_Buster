@@ -1,6 +1,6 @@
-<?php session_start(); ?>
-<?php require_once 'inc/connection.php' ?>
-<?php require_once 'inc/functions.php' ?>
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 
 
 <?php
@@ -107,7 +107,7 @@ if (isset($_POST['add_review'])) {
 
 <body>
 
-    <?php require_once 'inc/hedersingle.php'; ?>
+    <?php require_once 'inc/hedersingle.php';?>
 
 
 
@@ -151,7 +151,7 @@ $stars++;
 
 
 
-    <?php require_once 'inc/hederfinal.php'; ?>
+    <?php require_once 'inc/hederfinal.php';?>
 
 
     <div class="Content">
@@ -240,13 +240,13 @@ if (!empty($errors)) {
 
 
 
-    <?php require_once 'inc/footer.php' ?>
+    <?php require_once 'inc/footer.php'?>
 
-    <?php require_once 'inc/signup.php' ?>
+    <?php require_once 'inc/signup.php'?>
 
-    <?php require_once 'inc/login.php' ?>
+    <?php require_once 'inc/login.php'?>
 
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

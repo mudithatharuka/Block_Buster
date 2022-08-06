@@ -1,111 +1,97 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 
 
-<?php 
-		
-		
+<?php
 
-		if(!isset($_SESSION['user_id'])){
-			header("Location:singlemovie-review.php?movie_id={$_GET['movie_id']}&user_login=false");
-		}
+if (!isset($_SESSION['user_id'])) {
+    header("Location:singlemovie-review.php?movie_id={$_GET['movie_id']}&user_login=false");
+}
 
-		if(!isset($_GET['movie_id'])){
-			header('Location:movielisting.php?movie_id=false');
-		}else{
+if (!isset($_GET['movie_id'])) {
+    header('Location:movielisting.php?movie_id=false');
+} else {
 
-			$movie_id = mysqli_escape_string($connection, $_GET['movie_id']);
+    $movie_id = mysqli_escape_string($connection, $_GET['movie_id']);
 
-			$query = "SELECT * FROM movies WHERE movie_id = '{$_GET['movie_id']}' LIMIT 1";
-			$result = mysqli_query($connection, $query);
-			
-			if($result && mysqli_num_rows($result) == 1){
-				$data = mysqli_fetch_assoc($result);
-			}else{
-				header('Location:movielisting.php?retrive=false');
-			}
-		}
-			
+    $query  = "SELECT * FROM movies WHERE movie_id = '{$_GET['movie_id']}' LIMIT 1";
+    $result = mysqli_query($connection, $query);
+
+    if ($result && mysqli_num_rows($result) == 1) {
+        $data = mysqli_fetch_assoc($result);
+    } else {
+        header('Location:movielisting.php?retrive=false');
+    }
+}
 
 ?>
 
 <?php
 
-	$errors = array();
+$errors = array();
 
-	$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'];
 
-	$r_name = '';
-	$ratings = '';
-	$description = '';
-	
+$r_name      = '';
+$ratings     = '';
+$description = '';
 
-	if(isset($_POST['add_review'])){
+if (isset($_POST['add_review'])) {
 
+    $r_name      = $_POST['tittle'];
+    $ratings     = $_POST['rating'];
+    $description = $_POST['review'];
+    $movie_id    = $_POST['movie_id'];
 
+    $query  = "SELECT * FROM movies WHERE movie_id = '{$_GET['movie_id']}' LIMIT 1";
+    $result = mysqli_query($connection, $query);
 
-		$r_name = $_POST['tittle'];
-		$ratings = $_POST['rating'];
-		$description = $_POST['review'];
-		$movie_id = $_POST['movie_id'];
+    if ($result) {
+        $data = mysqli_fetch_assoc($result);
+    } else {
+        header('Location:movielisting.php?retrive=false');
+    }
 
+    //Checking required fields
+    $req_fields = array('movie_id', 'tittle', 'rating', 'review');
+    $errors     = array_merge($errors, check_req_fields($req_fields));
 
-		$query = "SELECT * FROM movies WHERE movie_id = '{$_GET['movie_id']}' LIMIT 1";
-			$result = mysqli_query($connection, $query);
+    //Checking max lengths
+    $max_len_fields = array('tittle' => 100, 'rating' => 2, 'review' => 1000);
+    $errors         = array_merge($errors, check_max_len($max_len_fields));
 
-			if($result){
-				$data = mysqli_fetch_assoc($result);
-			}else{
-				header('Location:movielisting.php?retrive=false');
-			}
-			
-		
+    if (empty($errors)) {
 
-		//Checking required fields
-		$req_fields =array('movie_id','tittle', 'rating','review');
-		$errors = array_merge($errors, check_req_fields($req_fields));
+        $r_name      = mysqlI_real_escape_string($connection, $_POST['tittle']);
+        $ratings     = mysqlI_real_escape_string($connection, $_POST['rating']);
+        $description = mysqlI_real_escape_string($connection, $_POST['review']);
 
+        date_default_timezone_set("Asia/Kolkata");
+        date_default_timezone_get();
+        $u_date_time = date("Y-m-d G:i:sa");
 
-		//Checking max lengths
-	 	$max_len_fields = array('tittle' => 100, 'rating' => 2,'review' => 1000);
-		$errors = array_merge($errors, check_max_len($max_len_fields));
+        $query = "INSERT INTO reviews(post_id, user_id, r_name, ratings, description, u_date_time, is_deleted) VALUES('{$movie_id}', '{$user_id}', '{$r_name}', '{$ratings}', '{$description}', '{$u_date_time}', 0)";
 
-		if(empty($errors)){
+        // echo $query;
+        // die();
 
-			
-			$r_name = mysqlI_real_escape_string($connection, $_POST['tittle']);
-			$ratings = mysqlI_real_escape_string($connection, $_POST['rating']);
-			$description = mysqlI_real_escape_string($connection, $_POST['review']);
+        $result = mysqli_query($connection, $query);
 
-			date_default_timezone_set("Asia/Kolkata");
-			date_default_timezone_get();
-			$u_date_time = date("Y-m-d G:i:sa");
+        if ($result) {
 
-			$query = "INSERT INTO reviews(post_id, user_id, r_name, ratings, description, u_date_time, is_deleted) VALUES('{$movie_id}', '{$user_id}', '{$r_name}', '{$ratings}', '{$description}', '{$u_date_time}', 0)";
+            header("Location:singlemovie-review.php?movie_id={$_GET['movie_id']}&review_added_sucessfully=true");
+        } else {
+            $errors[] = 'Database query failed';
+        }
 
-			// echo $query;
-			// die();
+    } else {
+        //header("Location:add-review.php?movie_id={$_GET['movie_id']}&fields_completed=false");
+    }
 
-			$result = mysqli_query($connection, $query);
-
-			if($result){
-
-				header("Location:singlemovie-review.php?movie_id={$_GET['movie_id']}&review_added_sucessfully=true");
-			}else{
-				$errors[] = 'Database query failed';
-			}
-
-		}else{
-			//header("Location:add-review.php?movie_id={$_GET['movie_id']}&fields_completed=false");
-		}
-
-
-	}
+}
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -119,7 +105,7 @@
 
 <body>
 
-    <?php require_once('inc/hedersingle.php'); ?>
+    <?php require_once 'inc/hedersingle.php';?>
 
 
 
@@ -142,13 +128,13 @@
             <h5><i class="fas fa-star"></i> <?php echo $data['ratings']; ?>/10 </h5>
 
             <h4>Rate this movie:
-                <?php 
-				$stars = 0;
-				while ($stars < $data['ratings']) {
-					?><i class="fas fa-star"></i><?php
-					$stars++;
-				}
-			?></h4>
+                <?php
+$stars = 0;
+while ($stars < $data['ratings']) {
+    ?><i class="fas fa-star"></i><?php
+$stars++;
+}
+?></h4>
 
         </div>
         <!--Ratingbar-->
@@ -163,7 +149,7 @@
 
 
 
-    <?php require_once('inc/hederfinal.php'); ?>
+    <?php require_once 'inc/hederfinal.php';?>
 
 
     <div class="Content">
@@ -177,10 +163,10 @@
         <div class="Cont-R">
             <div class="Items">
                 <ul>
-                    <li><a href="<?php echo("singlemovie.php?movie_id={$_GET['movie_id']}") ?>">OVERVIEW</a></li>
-                    <li><a href="<?php echo("singlemovie-review.php?movie_id={$_GET['movie_id']}") ?>">REVIEWS</a></li>
-                    <li><a href="<?php echo("singlemovie-media.php?movie_id={$_GET['movie_id']}") ?>">MEDIA</a></li>
-                    <li><a href="<?php echo("singlemovie-relatedmovies.php?movie_id={$_GET['movie_id']}") ?>">RELATED
+                    <li><a href="<?php echo ("singlemovie.php?movie_id={$_GET['movie_id']}") ?>">OVERVIEW</a></li>
+                    <li><a href="<?php echo ("singlemovie-review.php?movie_id={$_GET['movie_id']}") ?>">REVIEWS</a></li>
+                    <li><a href="<?php echo ("singlemovie-media.php?movie_id={$_GET['movie_id']}") ?>">MEDIA</a></li>
+                    <li><a href="<?php echo ("singlemovie-relatedmovies.php?movie_id={$_GET['movie_id']}") ?>">RELATED
                             MOVIES</a></li>
                 </ul>
             </div>
@@ -203,10 +189,10 @@
 
 
                     <?php
-			if(!empty($errors)){
-				display_errors($errors);
-			}
-			?>
+if (!empty($errors)) {
+    display_errors($errors);
+}
+?>
 
 
                     <input type="hidden" name="movie_id" value="<?php echo $_GET['movie_id']; ?>">
@@ -214,13 +200,13 @@
 
                     <p>
                         <label>Add a tittle to your review:</label>
-                        <input type="text" name="tittle" placeholder="Tittle" <?php echo 'value="' .$r_name. '"'; ?>>
+                        <input type="text" name="tittle" placeholder="Tittle" <?php echo 'value="' . $r_name . '"'; ?>>
                     </p>
                     <div class="balance"></div>
                     <p>
                         <label>Give your rating:</label>
                         <input type="number" name="rating" placeholder="Ratings by number"
-                            <?php echo 'value="' .$ratings. '"'; ?>>
+                            <?php echo 'value="' . $ratings . '"'; ?>>
                     </p>
                     <div class="balance"></div>
                     <p>
@@ -250,13 +236,13 @@
 
 
 
-    <?php require_once('inc/footer.php') ?>
+    <?php require_once 'inc/footer.php'?>
 
-    <?php require_once('inc/signup.php') ?>
+    <?php require_once 'inc/signup.php'?>
 
-    <?php require_once('inc/login.php') ?>
+    <?php require_once 'inc/login.php'?>
 
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

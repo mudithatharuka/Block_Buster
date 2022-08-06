@@ -1,30 +1,29 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
-<?php 
-		if(!isset($_GET['cbr_id'])){
-			header('Location:index.php?cbr_id=false');
-		}else{
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
+<?php
+if (!isset($_GET['cbr_id'])) {
+    header('Location:index.php?cbr_id=false');
+} else {
 
-			$query = "SELECT * FROM celebrities WHERE cbr_id = '{$_GET['cbr_id']}' AND is_deleted = 0 LIMIT 1";
-			$result = mysqli_query($connection, $query);
+    $query  = "SELECT * FROM celebrities WHERE cbr_id = '{$_GET['cbr_id']}' AND is_deleted = 0 LIMIT 1";
+    $result = mysqli_query($connection, $query);
 
-			if(mysqli_num_rows($result) == 1){
+    if (mysqli_num_rows($result) == 1) {
 
-				$query = "SELECT * FROM celebrities WHERE cbr_id = '{$_GET['cbr_id']}' LIMIT 1";
-				$result = mysqli_query($connection, $query);
+        $query  = "SELECT * FROM celebrities WHERE cbr_id = '{$_GET['cbr_id']}' LIMIT 1";
+        $result = mysqli_query($connection, $query);
 
-				if($result){
-					$data = mysqli_fetch_assoc($result);
-				}else{
-					header('Location:index.php?retrive=false');
-				}
-			}else{
-				header('Location:index.php?is_deleted_or_not uploaded=true');
-			}
+        if ($result) {
+            $data = mysqli_fetch_assoc($result);
+        } else {
+            header('Location:index.php?retrive=false');
+        }
+    } else {
+        header('Location:index.php?is_deleted_or_not uploaded=true');
+    }
 
-
-		}
+}
 
 ?>
 
@@ -42,7 +41,7 @@
 
 <body>
 
-    <?php require_once('inc/hedersingle.php'); ?>
+    <?php require_once 'inc/hedersingle.php';?>
 
 
 
@@ -64,18 +63,18 @@
             <h5><i class="fas fa-star"></i> <?php echo $data['ratings']; ?>/10 </h5>
 
             <h4>Level of the Celebrity:
-                <?php 
-				$stars = 0;
-				$empstars = 0;
-				while ($stars < $data['ratings']) {
-					?><i class="fas fa-star"></i><?php
-					$stars++;
-				}
-				while($empstars < 10 - $data['ratings']){
-					?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
-					$empstars++;
-				}
-			?></h4>
+                <?php
+$stars    = 0;
+$empstars = 0;
+while ($stars < $data['ratings']) {
+    ?><i class="fas fa-star"></i><?php
+$stars++;
+}
+while ($empstars < 10 - $data['ratings']) {
+    ?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
+$empstars++;
+}
+?></h4>
 
         </div>
         <!--Ratingbar-->
@@ -90,7 +89,7 @@
 
 
 
-    <?php require_once('inc/hederfinal.php'); ?>
+    <?php require_once 'inc/hederfinal.php';?>
 
 
     <div class="Content">
@@ -136,7 +135,7 @@
                 <h5>Number of tv series:</h5>
                 <h6>Around <?php echo $data['number_of_tvseries']; ?> series.</h6>
                 <h5>Audiance level:</h5>
-                <h6>In <?php echo $data['ratings'].'/10'; ?> level.</h6>
+                <h6>In <?php echo $data['ratings'] . '/10'; ?> level.</h6>
 
                 <div class="Advertiesment1">
                     <img src="img/LatestMv/slider4.jpg" align="Advertiesment1">
@@ -162,13 +161,13 @@
 
 
 
-    <?php require_once('inc/footer.php') ?>
+    <?php require_once 'inc/footer.php'?>
 
-    <?php require_once('inc/signup.php') ?>
+    <?php require_once 'inc/signup.php'?>
 
-    <?php require_once('inc/login.php') ?>
+    <?php require_once 'inc/login.php'?>
 
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

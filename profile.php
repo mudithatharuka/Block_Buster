@@ -1,26 +1,23 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
-<?php 
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
+<?php
 
-		if(!isset($_SESSION['user_id'])){
-			header("Location:index.php?user_login=false");
-		}else{
+if (!isset($_SESSION['user_id'])) {
+    header("Location:index.php?user_login=false");
+} else {
 
-			$query = "SELECT * FROM users WHERE user_id = '{$_SESSION['user_id']}'";
-			$result = mysqli_query($connection, $query);
+    $query  = "SELECT * FROM users WHERE user_id = '{$_SESSION['user_id']}'";
+    $result = mysqli_query($connection, $query);
 
-			if($result && mysqli_num_rows($result) == 1){
-				$data = mysqli_fetch_assoc($result);
-			}else{
-				header('Location:index.php?user_found=false');
-			}
-		}
-
+    if ($result && mysqli_num_rows($result) == 1) {
+        $data = mysqli_fetch_assoc($result);
+    } else {
+        header('Location:index.php?user_found=false');
+    }
+}
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -34,25 +31,25 @@
 
 <body>
 
-    <?php require_once('inc/hedersingle.php'); ?>
+    <?php require_once 'inc/hedersingle.php';?>
 
 
 
-    <?php if(isset($_GET['review_found']) && $_GET['review_found'] == 'false' ){
-			echo '<p class="error">Cant Find a Review with That Review ID</p>';
-		} ?>
-    <?php if(isset($_GET['query_successful']) && $_GET['query_successful'] == 'false' ){
-			echo '<p class="error">Database Query Failed</p>';
-		} ?>
-    <?php if(isset($_GET['set_review_id']) && $_GET['set_review_id'] == 'false' ){
-			echo '<p class="error">Please Select or Type a Review to Delete</p>';
-		} ?>
-    <?php if(isset($_GET['review_deleted']) && $_GET['review_deleted'] == 'true' ){
-			echo '<p class="cool">Review Deleted Successfully</p>';
-		} ?>
-    <?php if(isset($_GET['review_deleted']) && $_GET['review_deleted'] == 'false' ){
-			echo '<p class="error">Review Deleting Failed</p>';
-		} ?>
+    <?php if (isset($_GET['review_found']) && $_GET['review_found'] == 'false') {
+    echo '<p class="error">Cant Find a Review with That Review ID</p>';
+}?>
+    <?php if (isset($_GET['query_successful']) && $_GET['query_successful'] == 'false') {
+    echo '<p class="error">Database Query Failed</p>';
+}?>
+    <?php if (isset($_GET['set_review_id']) && $_GET['set_review_id'] == 'false') {
+    echo '<p class="error">Please Select or Type a Review to Delete</p>';
+}?>
+    <?php if (isset($_GET['review_deleted']) && $_GET['review_deleted'] == 'true') {
+    echo '<p class="cool">Review Deleted Successfully</p>';
+}?>
+    <?php if (isset($_GET['review_deleted']) && $_GET['review_deleted'] == 'false') {
+    echo '<p class="error">Review Deleting Failed</p>';
+}?>
 
 
 
@@ -86,7 +83,7 @@
 
 
 
-    <?php require_once('inc/hederfinal.php'); ?>
+    <?php require_once 'inc/hederfinal.php';?>
 
 
     <div class="Content">
@@ -112,28 +109,26 @@
 
                 <?php
 
+$query_review  = "SELECT * FROM reviews WHERE user_id = '{$_SESSION['user_id']}' AND is_deleted = 0";
+$result_review = mysqli_query($connection, $query_review);
+$num_reviews   = mysqli_num_rows($result_review);
 
-				$query_review = "SELECT * FROM reviews WHERE user_id = '{$_SESSION['user_id']}' AND is_deleted = 0";
-				$result_review = mysqli_query($connection, $query_review);
-				$num_reviews = mysqli_num_rows($result_review);
-
-				?>
+?>
 
 
                 <?php
 
-			if($result_review && $num_reviews > 0){
-				while ($data_review = mysqli_fetch_assoc($result_review)) {
-				
-					$query_movie = "SELECT * FROM movies WHERE movie_id = '{$data_review['post_id']}' LIMIT 1";
-					$result_movie = mysqli_query($connection, $query_movie);
+if ($result_review && $num_reviews > 0) {
+    while ($data_review = mysqli_fetch_assoc($result_review)) {
 
-						if($result_movie){
+        $query_movie  = "SELECT * FROM movies WHERE movie_id = '{$data_review['post_id']}' LIMIT 1";
+        $result_movie = mysqli_query($connection, $query_movie);
 
-							$data_movie = mysqli_fetch_assoc($result_movie);
+        if ($result_movie) {
 
-					
-					?>
+            $data_movie = mysqli_fetch_assoc($result_movie);
+
+            ?>
 
                 <div class="Single-review">
                     <div class="About">
@@ -145,13 +140,13 @@
                         <h3><?php echo $data_review['r_name']; ?></h3>
                         <h5><?php
 
-									$i = 0;
-									while ($i < $data_review['ratings']) {
-										echo'<i class="fas fa-star"></i>';
-										$i++;
-									}
+            $i = 0;
+            while ($i < $data_review['ratings']) {
+                echo '<i class="fas fa-star"></i>';
+                $i++;
+            }
 
-								?></h5>
+            ?></h5>
                         <h6><?php echo $data_review['u_date_time']; ?></h6>
                         <h4>By you</h4>
                     </div>
@@ -179,19 +174,17 @@
 
                 <?php
 
-						}else{
-							header('Location:movielisting.php?movie_in_review_retrive=false');			
-						}
-				}
+        } else {
+            header('Location:movielisting.php?movie_in_review_retrive=false');
+        }
+    }
 
+} else if ($num_reviews == 0) {
 
-			}else if($num_reviews == 0){
+    echo '<h5 style="color: #4280bf;">No Movie reviews to display</h5>';
+}
 
-				echo '<h5 style="color: #4280bf;">No Movie reviews to display</h5>';
-			}
-
-
-			?>
+?>
 
 
 
@@ -204,28 +197,26 @@
 
                 <?php
 
+$query_review  = "SELECT * FROM tsrreviews WHERE user_id = '{$_SESSION['user_id']}' AND is_deleted = 0";
+$result_review = mysqli_query($connection, $query_review);
+$num_reviews   = mysqli_num_rows($result_review);
 
-				$query_review = "SELECT * FROM tsrreviews WHERE user_id = '{$_SESSION['user_id']}' AND is_deleted = 0";
-				$result_review = mysqli_query($connection, $query_review);
-				$num_reviews = mysqli_num_rows($result_review);
-
-				?>
+?>
 
 
                 <?php
 
-			if($result_review && $num_reviews > 0){
-				while ($data_review = mysqli_fetch_assoc($result_review)) {
-				
-					$query_tvseries = "SELECT * FROM tvseries WHERE series_id = '{$data_review['post_id']}' LIMIT 1";
-					$result_tvseries = mysqli_query($connection, $query_movie);
+if ($result_review && $num_reviews > 0) {
+    while ($data_review = mysqli_fetch_assoc($result_review)) {
 
-						if($result_tvseries){
+        $query_tvseries  = "SELECT * FROM tvseries WHERE series_id = '{$data_review['post_id']}' LIMIT 1";
+        $result_tvseries = mysqli_query($connection, $query_movie);
 
-							$data_tvseries = mysqli_fetch_assoc($result_tvseries);
+        if ($result_tvseries) {
 
-					
-					?>
+            $data_tvseries = mysqli_fetch_assoc($result_tvseries);
+
+            ?>
 
                 <div class="Single-review">
                     <div class="About">
@@ -237,13 +228,13 @@
                         <h3><?php echo $data_review['r_name']; ?></h3>
                         <h5><?php
 
-									$i = 0;
-									while ($i < $data_review['ratings']) {
-										echo'<i class="fas fa-star"></i>';
-										$i++;
-									}
+            $i = 0;
+            while ($i < $data_review['ratings']) {
+                echo '<i class="fas fa-star"></i>';
+                $i++;
+            }
 
-								?></h5>
+            ?></h5>
                         <h6><?php echo $data_review['u_date_time']; ?></h6>
                         <h4>By you</h4>
                     </div>
@@ -270,18 +261,16 @@
 
                 <?php
 
-						}else{
-							header('Location:tvserieslisting.php?tvseries_in_review_retrive=false');			
-						}
-				}
+        } else {
+            header('Location:tvserieslisting.php?tvseries_in_review_retrive=false');
+        }
+    }
 
+} else if ($num_reviews == 0) {
+    echo '<h5 style="color: #4280bf;">No TV Series reviews to display</h5>';
+}
 
-			}else if($num_reviews == 0){
-				echo '<h5 style="color: #4280bf;">No TV Series reviews to display</h5>';
-			}
-
-
-			?>
+?>
 
             </div>
             <!--Overview-->
@@ -304,13 +293,13 @@
 
 
 
-    <?php require_once('inc/footer.php') ?>
+    <?php require_once 'inc/footer.php'?>
 
-    <?php require_once('inc/signup.php') ?>
+    <?php require_once 'inc/signup.php'?>
 
-    <?php require_once('inc/login.php') ?>
+    <?php require_once 'inc/login.php'?>
 
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

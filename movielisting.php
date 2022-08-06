@@ -1,10 +1,6 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
-
-
-
-
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +16,7 @@
 
     <div class="Wrapper">
 
-        <?php require_once('inc/heder.php'); ?>
+        <?php require_once 'inc/heder.php';?>
 
         <style>
         .Background {
@@ -48,7 +44,7 @@
         <!--Listtop-->
 
 
-        <?php require_once('inc/hederfinal.php'); ?>
+        <?php require_once 'inc/hederfinal.php';?>
 
 
         <div class="Content">
@@ -59,57 +55,54 @@
 
                 <?php
 
-			$query = "SELECT * FROM movies_seq ORDER BY movie_id";
-			$try_id = mysqli_query($connection, $query);
-			
+$query  = "SELECT * FROM movies_seq ORDER BY movie_id";
+$try_id = mysqli_query($connection, $query);
 
+if (mysqli_num_rows($try_id) > 0) {
 
-			if(mysqli_num_rows($try_id) > 0){
+    if (isset($_GET['in_theater'])) {
+        $sql = "SELECT * FROM movies WHERE is_deleted = 0 AND condi ='On Theater' ORDER BY movie_id DESC";
+    } else if (isset($_GET['main_category'])) {
 
-				if(isset($_GET['in_theater'])){
-						$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND condi ='On Theater' ORDER BY movie_id DESC";
-				}else if(isset($_GET['main_category'])){
+        switch ($_GET['main_category']) {
+            case 'Action':
+                $sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Action' OR action ='yes') ORDER BY movie_id DESC";
+                break;
+            case 'Animation':
+                $sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Animation' OR animation ='yes') ORDER BY movie_id DESC";
+                break;
+            case 'Sci-fi':
+                $sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Sci-fi' OR sci_fi ='yes') ORDER BY movie_id DESC";
+                break;
+            case 'Comady':
+                $sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Comady' OR comady ='yes') ORDER BY movie_id DESC";
+                break;
+            case 'Horror':
+                $sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Horror' OR horror ='yes') ORDER BY movie_id DESC";
+                break;
+            case 'Thriller':
+                $sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Thriller' OR thriller ='yes') ORDER BY movie_id DESC";
+                break;
+        }
 
-					switch ($_GET['main_category']) {
-					case 'Action':
-						$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Action' OR action ='yes') ORDER BY movie_id DESC";
-						break;
-					case 'Animation':
-						$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Animation' OR animation ='yes') ORDER BY movie_id DESC";
-						break;
-					case 'Sci-fi':
-						$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Sci-fi' OR sci_fi ='yes') ORDER BY movie_id DESC";
-						break;
-					case 'Comady':
-						$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Comady' OR comady ='yes') ORDER BY movie_id DESC";
-						break;
-					case 'Horror':
-						$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Horror' OR horror ='yes') ORDER BY movie_id DESC";
-						break;
-					case 'Thriller':
-						$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND (main_category ='Thriller' OR thriller ='yes') ORDER BY movie_id DESC";
-						break;
-					}
+    } else if (isset($_GET['find'])) {
+        $moviename   = mysqli_real_escape_string($connection, $_GET['moviename']);
+        $genres      = mysqli_real_escape_string($connection, $_GET['genres']);
+        $ratingrange = mysqli_real_escape_string($connection, $_GET['ratingrange']);
+        $fromyear    = mysqli_real_escape_string($connection, $_GET['fromyear']);
+        $toyear      = mysqli_real_escape_string($connection, $_GET['toyear']);
 
-				}else if(isset($_GET['find'])){
-						$moviename = mysqli_real_escape_string($connection, $_GET['moviename']);
-						$genres = mysqli_real_escape_string($connection, $_GET['genres']);
-						$ratingrange = mysqli_real_escape_string($connection, $_GET['ratingrange']);
-						$fromyear = mysqli_real_escape_string($connection, $_GET['fromyear']);
-						$toyear = mysqli_real_escape_string($connection, $_GET['toyear']);
+        $sql = "SELECT * FROM movies WHERE (m_name LIKE '%{$moviename}%' OR main_category LIKE '%{$genres}%' OR year > '{$fromyear}' OR year < '{$toyear}') AND ratings > '{$ratingrange}' AND is_deleted = 0";
+    } else if (isset($_GET['topsearch'])) {
+        $sql = "SELECT * FROM movies WHERE is_deleted = 0 AND m_name = '{$_GET['name']}' ORDER BY movie_id DESC";
+    } else {
+        $sql = "SELECT * FROM movies WHERE is_deleted = 0 ORDER BY movie_id DESC";
+    }
 
-						$sql = "SELECT * FROM movies WHERE (m_name LIKE '%{$moviename}%' OR main_category LIKE '%{$genres}%' OR year > '{$fromyear}' OR year < '{$toyear}') AND ratings > '{$ratingrange}' AND is_deleted = 0";
-				}else if(isset($_GET['topsearch'])){
-						$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND m_name = '{$_GET['name']}' ORDER BY movie_id DESC";
-				}else{
-						$sql = "SELECT * FROM movies WHERE is_deleted = 0 ORDER BY movie_id DESC";
-				}
+    $result      = mysqli_query($connection, $sql);
+    $num_results = mysqli_num_rows($result);
 
-				$result = mysqli_query($connection, $sql);
-				$num_results = mysqli_num_rows($result);
-
-
-			?>
+    ?>
 
 
                 <div class="Heading">
@@ -123,33 +116,32 @@
                 <div class="balance">
 
                 </div>
-                <?php 
-				if (mysqli_num_rows($result) > 0)
-				{
-				 	while($row = mysqli_fetch_assoc($result)){
-			?><div class="List">
+                <?php
+if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            ?><div class="List">
 
-                    <a href="<?php echo("singlemovie.php?movie_id={$row['movie_id']}") ?>">
+                    <a href="<?php echo ("singlemovie.php?movie_id={$row['movie_id']}") ?>">
                         <div class="movie">
 
                             <img
                                 src="Post_images/Movies/<?php echo $row['movie_id']; ?>/<?php echo $row['main_img']; ?>">
-                            <?php $b_color = define_b_color($row['main_category']); ?>
+                            <?php $b_color = define_b_color($row['main_category']);?>
                             <h6 style="background-color: <?php echo $b_color; ?>;"><?php echo $row['main_category']; ?>
                             </h6>
-                            <h3><i class="fas fa-star"></i><?php echo $row['ratings']."/10"; ?></h3>
+                            <h3><i class="fas fa-star"></i><?php echo $row['ratings'] . "/10"; ?></h3>
                             <h2><?php echo $row["m_name"]; ?></h2>
 
                         </div>
                     </a>
 
                 </div>
-                <!--List--><?php	
-					}
-				}
-			}else{
+                <!--List--><?php
+}
+    }
+} else {
 
-			?><div class="Heading">
+    ?><div class="Heading">
                     <h5>Found 0 movies added to the site</h5>
                     <h6> View model:</h6>
                     <h4><a href=""><i class="fas fa-list"></i></a></h4>
@@ -160,8 +152,8 @@
                 <div class="balance">
 
                 </div><?php
-					}
-			?><div class="balance">
+}
+?><div class="balance">
 
                 </div>
 
@@ -280,11 +272,11 @@
         <!--Content-->
 
 
-        <?php require_once('inc/footer.php') ?>
+        <?php require_once 'inc/footer.php'?>
 
-        <?php require_once('inc/signup.php') ?>
+        <?php require_once 'inc/signup.php'?>
 
-        <?php require_once('inc/login.php') ?>
+        <?php require_once 'inc/login.php'?>
 
     </div>
     <!--Wrapper-->
@@ -292,4 +284,4 @@
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

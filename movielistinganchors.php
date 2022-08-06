@@ -1,43 +1,35 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
-
-
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 
 <?php
 
-			$query = "SELECT * FROM movies_seq ORDER BY movie_id";
-			$try_id = mysqli_query($connection, $query);
-			
+$query  = "SELECT * FROM movies_seq ORDER BY movie_id";
+$try_id = mysqli_query($connection, $query);
 
+if (mysqli_num_rows($try_id) > 0) {
 
-			if(mysqli_num_rows($try_id) > 0){
+    if (isset($_GET['popular'])) {
+        $sql   = "SELECT * FROM movies WHERE is_deleted = 0 AND ratings > 5 ORDER BY movie_id DESC";
+        $topic = 'MOST POPULAR MOVIES';
+    } else if (isset($_GET['comming_soon'])) {
+        $sql   = "SELECT * FROM movies WHERE is_deleted = 0 AND condi = 'Comming soon' ORDER BY movie_id DESC";
+        $topic = 'COMMING SOON';
+    } else if (isset($_GET['top_rated'])) {
+        $sql   = "SELECT * FROM movies WHERE is_deleted = 0 AND ratings > 6 ORDER BY movie_id DESC";
+        $topic = 'TOP RATED';
+    } else if (isset($_GET['most_reviewed'])) {
+        $sql   = "SELECT * FROM movies WHERE is_deleted = 0 AND ratings > 6 ORDER BY movie_id DESC";
+        $topic = 'MOST REVIEWED';
+    } else {
+        $sql   = "SELECT * FROM movies WHERE is_deleted = 0 AND language ='Hollywood' ORDER BY movie_id DESC";
+        $topic = 'MOVIELISTING';
+    }
 
-				if(isset($_GET['popular'])){
-					$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND ratings > 5 ORDER BY movie_id DESC";
-					$topic = 'MOST POPULAR MOVIES';
-				}
-				else if(isset($_GET['comming_soon'])){
-					$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND condi = 'Comming soon' ORDER BY movie_id DESC";
-					$topic = 'COMMING SOON';
-				}
-				else if(isset($_GET['top_rated'])){
-					$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND ratings > 6 ORDER BY movie_id DESC";
-					$topic = 'TOP RATED';
-				}
-				else if(isset($_GET['most_reviewed'])){
-					$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND ratings > 6 ORDER BY movie_id DESC";
-					$topic = 'MOST REVIEWED';
-				}else{
-					$sql = "SELECT * FROM movies WHERE is_deleted = 0 AND language ='Hollywood' ORDER BY movie_id DESC";
-					$topic = 'MOVIELISTING';	
-				}
+    $result      = mysqli_query($connection, $sql);
+    $num_results = mysqli_num_rows($result);
 
-				$result = mysqli_query($connection, $sql);
-				$num_results = mysqli_num_rows($result);
-
-
-			?>
+    ?>
 
 
 
@@ -55,7 +47,7 @@
 
     <div class="Wrapper">
 
-        <?php require_once('inc/heder.php'); ?>
+        <?php require_once 'inc/heder.php';?>
 
 
         <div class="Topic">
@@ -65,7 +57,7 @@
 
 
 
-        <?php require_once('inc/hederfinal.php'); ?>
+        <?php require_once 'inc/hederfinal.php';?>
 
 
         <div class="Content">
@@ -88,20 +80,13 @@
                 </div>
 
 
-                <?php 
+                <?php
 
+    if (mysqli_num_rows($result) > 0) {
 
-				if (mysqli_num_rows($result) > 0)
-				{
-				 
+        while ($row = mysqli_fetch_assoc($result)) {
 
-				 	while($row = mysqli_fetch_assoc($result)){
-				    
-				      
-			
-
-
-			?>
+            ?>
 
 
 
@@ -109,15 +94,15 @@
 
                 <div class="List">
 
-                    <a href="<?php echo("singlemovie.php?movie_id={$row['movie_id']}") ?>">
+                    <a href="<?php echo ("singlemovie.php?movie_id={$row['movie_id']}") ?>">
                         <div class="movie">
 
                             <img
                                 src="Post_images/Movies/<?php echo $row['movie_id']; ?>/<?php echo $row['main_img']; ?>">
-                            <?php $b_color = define_b_color($row['main_category']); ?>
+                            <?php $b_color = define_b_color($row['main_category']);?>
                             <h6 style="background-color: <?php echo $b_color; ?>;"><?php echo $row['main_category']; ?>
                             </h6>
-                            <h3><i class="fas fa-star"></i><?php echo $row['ratings']."/10"; ?></h3>
+                            <h3><i class="fas fa-star"></i><?php echo $row['ratings'] . "/10"; ?></h3>
                             <h2><?php echo $row["m_name"]; ?></h2>
 
                         </div>
@@ -129,12 +114,12 @@
 
 
                 <?php
-			
-					}
-				}
-			}else{
 
-			?>
+        }
+    }
+} else {
+
+    ?>
                 <div class="Heading">
                     <h5>Found 0 movies added to the site</h5>
                     <h6> View model:</h6>
@@ -147,8 +132,8 @@
 
                 </div>
                 <?php
-					}
-			?>
+}
+?>
 
 
 
@@ -267,11 +252,11 @@
         <!--Content-->
 
 
-        <?php require_once('inc/footer.php') ?>
+        <?php require_once 'inc/footer.php'?>
 
-        <?php require_once('inc/signup.php') ?>
+        <?php require_once 'inc/signup.php'?>
 
-        <?php require_once('inc/login.php') ?>
+        <?php require_once 'inc/login.php'?>
 
     </div>
     <!--Wrapper-->
@@ -279,4 +264,4 @@
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

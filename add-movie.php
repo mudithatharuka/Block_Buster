@@ -1,187 +1,181 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 <?php
-	if(!isset($_SESSION['admin_id'])){
-		header('Location:adminlogin.php?has_logged=false');
-	}
+if (!isset($_SESSION['admin_id'])) {
+    header('Location:adminlogin.php?has_logged=false');
+}
 ?>
 
 <?php
 
-	$errors = array();
-	$admin_id = $_SESSION['admin_id'];
+$errors   = array();
+$admin_id = $_SESSION['admin_id'];
 
-	$m_name = '';
-	$small_descrip ='';
-	$m_descrip = '';
-	$m_director = '';
-	$m_writer = '';
-	$stars = '';
-	$genres = '';
-	$relese_date = '';
-	$year = '';
-	$run_time = '';
-	$ratings = '';
-	$vid1_e_link = '';
-	$vid2_e_link = '';
-	$vid3_e_link = '';
-	$off_t_e_link = '';
-	 
+$m_name        = '';
+$small_descrip = '';
+$m_descrip     = '';
+$m_director    = '';
+$m_writer      = '';
+$stars         = '';
+$genres        = '';
+$relese_date   = '';
+$year          = '';
+$run_time      = '';
+$ratings       = '';
+$vid1_e_link   = '';
+$vid2_e_link   = '';
+$vid3_e_link   = '';
+$off_t_e_link  = '';
 
+if (isset($_POST['add-movie'])) {
 
-	if(isset($_POST['add-movie'])){
+    $m_name        = $_POST['m_name'];
+    $small_descrip = $_POST['small_descrip'];
+    $m_descrip     = $_POST['m_descrip'];
+    $m_director    = $_POST['m_director'];
+    $m_writer      = $_POST['m_writer'];
+    $stars         = $_POST['stars'];
+    $genres        = $_POST['genres'];
+    $relese_date   = $_POST['relese_date'];
+    $year          = $_POST['year'];
+    $run_time      = $_POST['run_time'];
+    $ratings       = $_POST['ratings'];
+    $vid1_e_link   = $_POST['vid1_e_link'];
+    $vid2_e_link   = $_POST['vid2_e_link'];
+    $vid3_e_link   = $_POST['vid3_e_link'];
+    $off_t_e_link  = $_POST['off_t_e_link'];
 
-		$m_name = $_POST['m_name'];
-		$small_descrip = $_POST['small_descrip'];
-		$m_descrip = $_POST['m_descrip'];
-		$m_director = $_POST['m_director'];
-		$m_writer = $_POST['m_writer'];
-		$stars = $_POST['stars'];
-		$genres = $_POST['genres'];
-		$relese_date = $_POST['relese_date'];
-		$year = $_POST['year'];
-		$run_time = $_POST['run_time'];
-		$ratings = $_POST['ratings'];
-		$vid1_e_link = $_POST['vid1_e_link'];
-		$vid2_e_link = $_POST['vid2_e_link'];
-		$vid3_e_link = $_POST['vid3_e_link'];
-		$off_t_e_link = $_POST['off_t_e_link'];
+    //Checking required fields
+    $req_fields = array('m_name', 'small_descrip', 'm_descrip', 'm_director', 'm_writer', 'stars', 'genres', 'relese_date', 'year', 'run_time', 'ratings', 'vid1_e_link', 'vid2_e_link', 'vid3_e_link', 'off_t_e_link');
+    $errors     = array_merge($errors, check_req_fields($req_fields));
 
+    //Checkin required images
+    $req_images = array('main_img', 'img1', 'img2', 'img3', 'img4', 'img5', 'img6', 'img7', 'img8', 'img9', 'img10', 'img11', 'img12');
+    $errors     = array_merge($errors, check_req_images($req_images));
 
+    //Checking max lengths
+    $max_len_fields = array('m_name' => 100, 'small_descrip' => 150, 'm_descrip' => 5000, 'm_director' => 50, 'm_writer' => 50, 'stars' => 100, 'genres' => 100, 'relese_date' => 20, 'year' => 4, 'run_time' => 10, 'ratings' => 5, 'vid1_e_link' => 1000, 'vid2_e_link' => 1000, 'vid3_e_link' => 1000, 'off_t_e_link' => 1000);
+    $errors         = array_merge($errors, check_max_len($max_len_fields));
 
-		//Checking required fields
-		$req_fields =array('m_name', 'small_descrip','m_descrip','m_director','m_writer','stars','genres','relese_date', 'year','run_time','ratings','vid1_e_link','vid2_e_link','vid3_e_link','off_t_e_link');
-		$errors = array_merge($errors, check_req_fields($req_fields));
+    if (empty($errors)) {
 
-		//Checkin required images
-		$req_images =array('main_img','img1','img2','img3','img4','img5','img6','img7','img8','img9','img10','img11','img12');
-		$errors = array_merge($errors, check_req_images($req_images));
+        //No errors found. Sanitize the inputs
+        $m_name        = mysqli_real_escape_string($connection, $_POST['m_name']);
+        $small_descrip = mysqli_real_escape_string($connection, $_POST['small_descrip']);
+        $m_descrip     = mysqli_real_escape_string($connection, $_POST['m_descrip']);
+        $m_director    = mysqli_real_escape_string($connection, $_POST['m_director']);
+        $m_writer      = mysqli_real_escape_string($connection, $_POST['m_writer']);
+        $stars         = mysqli_real_escape_string($connection, $_POST['stars']);
+        $genres        = mysqli_real_escape_string($connection, $_POST['genres']);
+        $relese_date   = mysqli_real_escape_string($connection, $_POST['relese_date']);
+        $year          = mysqli_real_escape_string($connection, $_POST['year']);
+        $run_time      = mysqli_real_escape_string($connection, $_POST['run_time']);
+        $ratings       = mysqli_real_escape_string($connection, $_POST['ratings']);
+        $vid1_e_link   = mysqli_real_escape_string($connection, $_POST['vid1_e_link']);
+        $vid2_e_link   = mysqli_real_escape_string($connection, $_POST['vid2_e_link']);
+        $vid3_e_link   = mysqli_real_escape_string($connection, $_POST['vid3_e_link']);
+        $off_t_e_link  = mysqli_real_escape_string($connection, $_POST['off_t_e_link']);
 
-		//Checking max lengths
-	 	$max_len_fields = array('m_name' => 100, 'small_descrip' => 150,'m_descrip' => 5000,'m_director' => 50,'m_writer' => 50,'stars' => 100,'genres' => 100,'relese_date' => 20, 'year' => 4,'run_time' => 10,'ratings' => 5,'vid1_e_link' => 1000,'vid2_e_link' => 1000,'vid3_e_link' => 1000,'off_t_e_link' => 1000);
-		$errors = array_merge($errors, check_max_len($max_len_fields));
+        $main_category = $_POST['main_category'];
+        $action        = $_POST['action'];
+        $sci_fi        = $_POST['sci_fi'];
+        $animation     = $_POST['animation'];
+        $comady        = $_POST['comady'];
+        $thriller      = $_POST['thriller'];
+        $horror        = $_POST['horror'];
+        $language      = $_POST['language'];
+        $condition     = $_POST['condi'];
 
-		if(empty($errors)){
+        //Getting the movie_id of the lastly added movie for make a directory for images
+        $query = "SELECT * FROM movies_seq ORDER BY movie_id DESC LIMIT 1";
 
-			//No errors found. Sanitize the inputs
-			$m_name = mysqli_real_escape_string($connection, $_POST['m_name']);
-			$small_descrip = mysqli_real_escape_string($connection, $_POST['small_descrip']);
-			$m_descrip = mysqli_real_escape_string($connection, $_POST['m_descrip']);
-			$m_director = mysqli_real_escape_string($connection, $_POST['m_director']);
-			$m_writer = mysqli_real_escape_string($connection, $_POST['m_writer']);
-			$stars = mysqli_real_escape_string($connection, $_POST['stars']);
-			$genres = mysqli_real_escape_string($connection, $_POST['genres']);
-			$relese_date = mysqli_real_escape_string($connection, $_POST['relese_date']);
-			$year = mysqli_real_escape_string($connection, $_POST['year']);
-			$run_time = mysqli_real_escape_string($connection, $_POST['run_time']);
-			$ratings = mysqli_real_escape_string($connection, $_POST['ratings']);
-			$vid1_e_link = mysqli_real_escape_string($connection, $_POST['vid1_e_link']);
-			$vid2_e_link = mysqli_real_escape_string($connection, $_POST['vid2_e_link']);
-			$vid3_e_link = mysqli_real_escape_string($connection, $_POST['vid3_e_link']);
-			$off_t_e_link = mysqli_real_escape_string($connection, $_POST['off_t_e_link']);
+        $result_set = mysqli_query($connection, $query);
 
-			$main_category = $_POST['main_category'];
-			$action = $_POST['action'];
-			$sci_fi = $_POST['sci_fi'];
-			$animation = $_POST['animation'];
-			$comady = $_POST['comady'];
-			$thriller = $_POST['thriller'];
-			$horror = $_POST['horror'];
-			$language = $_POST['language'];
-			$condition = $_POST['condi'];
+        if ($result_set) {
+            if (mysqli_num_rows($result_set) == 1) {
+                //Last movie_id retrived
+                $movie = mysqli_fetch_assoc($result_set);
+                $id    = $movie['movie_id'];
+                $id++;
+                if ($id > 1 && $id < 10) {
+                    $movie_id = "MOV00{$id}";
+                } elseif ($id > 9 && $id < 100) {
+                    $movie_id = "MOV0{$id}";
+                } elseif ($id > 99) {
+                    $movie_id = "MOV{$id}";
+                }
 
-			//Getting the movie_id of the lastly added movie for make a directory for images
-			$query = "SELECT * FROM movies_seq ORDER BY movie_id DESC LIMIT 1";
+            } else {
+                $id       = 1;
+                $movie_id = "MOV00{$id}";
+            }
+        } else {
+            $errors[] = 'Retriving last movie id database query faild';
+        }
 
-			$result_set = mysqli_query($connection, $query);
+        //Maked a folder to store photos with movie_id
+        $curdir = getcwd();
+        mkdir($curdir . "/Post_images/Movies/{$movie_id}", 0777);
 
-			if($result_set){
-				if(mysqli_num_rows($result_set) == 1){
-					//Last movie_id retrived 
-					$movie = mysqli_fetch_assoc($result_set);
-					$id = $movie['movie_id'];
-					$id++;
-					if($id > 1 && $id < 10){
-						$movie_id = "MOV00{$id}";
-					}elseif ($id > 9 && $id < 100) {
-						$movie_id = "MOV0{$id}";
-					}elseif ($id > 99) {
-						$movie_id = "MOV{$id}";
-					}
-					
-				}else{
-					$id = 1;
-					$movie_id = "MOV00{$id}";
-				}
-			}else{
-				$errors[] = 'Retriving last movie id database query faild';
-			}
+        $target_main = "Post_images/Movies/{$movie_id}/" . basename($_FILES['main_img']['name']);
+        $target1     = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img1']['name']);
+        $target2     = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img2']['name']);
+        $target3     = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img3']['name']);
+        $target4     = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img4']['name']);
+        $target5     = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img5']['name']);
+        $target6     = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img6']['name']);
+        $target7     = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img7']['name']);
+        $target8     = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img8']['name']);
+        $target9     = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img9']['name']);
+        $target10    = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img10']['name']);
+        $target11    = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img11']['name']);
+        $target12    = "Post_images/Movies/{$movie_id}/" . basename($_FILES['img12']['name']);
 
-			//Maked a folder to store photos with movie_id
-			$curdir = getcwd();
-			mkdir($curdir."/Post_images/Movies/{$movie_id}", 0777);	
+        $main_im = $_FILES['main_img']['name'];
+        $im1     = $_FILES['img1']['name'];
+        $im2     = $_FILES['img2']['name'];
+        $im3     = $_FILES['img3']['name'];
+        $im4     = $_FILES['img4']['name'];
+        $im5     = $_FILES['img5']['name'];
+        $im6     = $_FILES['img6']['name'];
+        $im7     = $_FILES['img7']['name'];
+        $im8     = $_FILES['img8']['name'];
+        $im9     = $_FILES['img9']['name'];
+        $im10    = $_FILES['img10']['name'];
+        $im11    = $_FILES['img11']['name'];
+        $im12    = $_FILES['img12']['name'];
 
-			$target_main = "Post_images/Movies/{$movie_id}/".basename($_FILES['main_img']['name']);
-			$target1 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img1']['name']);
-			$target2 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img2']['name']);
-			$target3 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img3']['name']);
-			$target4 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img4']['name']);
-			$target5 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img5']['name']);
-			$target6 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img6']['name']);
-			$target7 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img7']['name']);
-			$target8 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img8']['name']);
-			$target9 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img9']['name']);
-			$target10 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img10']['name']);
-			$target11 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img11']['name']);
-			$target12 = "Post_images/Movies/{$movie_id}/".basename($_FILES['img12']['name']);
+        //Time zone is set to Asian time zone
+        date_default_timezone_set("Asia/Kolkata");
+        date_default_timezone_get();
+        $u_date = date("Y-m-d");
+        $u_time = date("G:i:sa");
 
-			$main_im = $_FILES['main_img']['name'];
-			$im1 = $_FILES['img1']['name'];
-			$im2 = $_FILES['img2']['name'];
-			$im3 = $_FILES['img3']['name'];
-			$im4 = $_FILES['img4']['name'];
-			$im5 = $_FILES['img5']['name'];
-			$im6 = $_FILES['img6']['name'];
-			$im7 = $_FILES['img7']['name'];
-			$im8 = $_FILES['img8']['name'];
-			$im9 = $_FILES['img9']['name'];
-			$im10 = $_FILES['img10']['name'];
-			$im11 = $_FILES['img11']['name'];
-			$im12 = $_FILES['img12']['name'];
+        //Insert to table movies
+        $query = "INSERT INTO movies(admin_id, m_name, main_img, small_descrip, m_descrip, m_director, m_writer, stars, genres, main_category, action, sci_fi, animation, comady, thriller, horror, language, condi, relese_date, year, run_time, ratings, vid1_e_link, vid2_e_link, vid3_e_link, off_t_e_link, im_1, im_2, im_3, im_4, im_5, im_6, im_7, im_8, im_9, im_10, im_11, im_12, u_date, u_time, is_deleted) VALUES ('{$admin_id}', '{$m_name}', '{$main_im}', '{$small_descrip}', '{$m_descrip}', '{$m_director}', '{$m_writer}', '{$stars}','{$genres}', '{$main_category}', '{$action}', '{$sci_fi}', '{$animation}', '{$comady}', '{$thriller}', '{$horror}', '{$language}', '{$condition}', '{$relese_date}', '{$year}', '{$run_time}', '{$ratings}', '{$vid1_e_link}', '{$vid2_e_link}', '{$vid3_e_link}', '{$off_t_e_link}', '{$im1}', '{$im2}', '{$im3}', '{$im4}', '{$im5}', '{$im6}', '{$im7}', '{$im8}', '{$im9}', '{$im10}', '{$im11}', '{$im12}', '{$u_date}', '{$u_time}', 0)";
 
-			//Time zone is set to Asian time zone
-			date_default_timezone_set("Asia/Kolkata");
-			date_default_timezone_get();
-			$u_date = date("Y-m-d");
-			$u_time = date("G:i:sa");
+        $result_set = mysqli_query($connection, $query);
 
-			//Insert to table movies
-			$query = "INSERT INTO movies(admin_id, m_name, main_img, small_descrip, m_descrip, m_director, m_writer, stars, genres, main_category, action, sci_fi, animation, comady, thriller, horror, language, condi, relese_date, year, run_time, ratings, vid1_e_link, vid2_e_link, vid3_e_link, off_t_e_link, im_1, im_2, im_3, im_4, im_5, im_6, im_7, im_8, im_9, im_10, im_11, im_12, u_date, u_time, is_deleted) VALUES ('{$admin_id}', '{$m_name}', '{$main_im}', '{$small_descrip}', '{$m_descrip}', '{$m_director}', '{$m_writer}', '{$stars}','{$genres}', '{$main_category}', '{$action}', '{$sci_fi}', '{$animation}', '{$comady}', '{$thriller}', '{$horror}', '{$language}', '{$condition}', '{$relese_date}', '{$year}', '{$run_time}', '{$ratings}', '{$vid1_e_link}', '{$vid2_e_link}', '{$vid3_e_link}', '{$off_t_e_link}', '{$im1}', '{$im2}', '{$im3}', '{$im4}', '{$im5}', '{$im6}', '{$im7}', '{$im8}', '{$im9}', '{$im10}', '{$im11}', '{$im12}', '{$u_date}', '{$u_time}', 0)";
+        if ($result_set) {
+            //Query successful
 
-			$result_set = mysqli_query($connection, $query);
+            if (move_uploaded_file($_FILES['main_img']['tmp_name'], $target_main) && move_uploaded_file($_FILES['img1']['tmp_name'], $target1) && move_uploaded_file($_FILES['img2']['tmp_name'], $target2) && move_uploaded_file($_FILES['img3']['tmp_name'], $target3) && move_uploaded_file($_FILES['img4']['tmp_name'], $target4) && move_uploaded_file($_FILES['img5']['tmp_name'], $target5) && move_uploaded_file($_FILES['img6']['tmp_name'], $target6) && move_uploaded_file($_FILES['img7']['tmp_name'], $target7) && move_uploaded_file($_FILES['img8']['tmp_name'], $target8) && move_uploaded_file($_FILES['img9']['tmp_name'], $target9) && move_uploaded_file($_FILES['img10']['tmp_name'], $target10) && move_uploaded_file($_FILES['img11']['tmp_name'], $target11) && move_uploaded_file($_FILES['img12']['tmp_name'], $target12)) {
 
-			if($result_set){
-				//Query successful
+                header('Location:adminhome.php?movie_added_sucessfully=true');
 
-				if(move_uploaded_file($_FILES['main_img']['tmp_name'], $target_main) && move_uploaded_file($_FILES['img1']['tmp_name'], $target1) && move_uploaded_file($_FILES['img2']['tmp_name'], $target2) && move_uploaded_file($_FILES['img3']['tmp_name'], $target3) && move_uploaded_file($_FILES['img4']['tmp_name'], $target4) && move_uploaded_file($_FILES['img5']['tmp_name'], $target5) && move_uploaded_file($_FILES['img6']['tmp_name'], $target6) && move_uploaded_file($_FILES['img7']['tmp_name'], $target7) && move_uploaded_file($_FILES['img8']['tmp_name'], $target8) && move_uploaded_file($_FILES['img9']['tmp_name'], $target9) && move_uploaded_file($_FILES['img10']['tmp_name'], $target10) && move_uploaded_file($_FILES['img11']['tmp_name'], $target11) && move_uploaded_file($_FILES['img12']['tmp_name'], $target12)){
+            } else {
+                $errors[] = 'Adding failed. Uploded immages did not saved';
+            }
 
-					header('Location:adminhome.php?movie_added_sucessfully=true');
+        } else {
+            //Query unsucessful
+            $errors[] = 'Database query failed';
+        }
 
-				}else{
-					$errors[] = 'Adding failed. Uploded immages did not saved';
-				}
+    }
 
-			}else{
-				//Query unsucessful
-				$errors[] = 'Database query failed';
-			}
-
-		}
-
-	}
-
-
+}
 
 ?>
 
@@ -195,7 +189,7 @@
 
 <body>
 
-    <?php require_once('inc/adminheader.php') ?>
+    <?php require_once 'inc/adminheader.php'?>
 
     <div class="Content">
         <h1>Add Movies</h1>
@@ -203,16 +197,16 @@
         <div class="balance"></div>
 
         <?php
-			if(!empty($errors)){
-				display_errors($errors);
-			}
-		?>
+if (!empty($errors)) {
+    display_errors($errors);
+}
+?>
 
         <form method="post" action="add-movie.php" enctype="multipart/form-data">
 
             <p>
                 <label>Movie Name:</label>
-                <input type="text" name="m_name" placeholder=" Add name" <?php echo 'value="' .$m_name. '"'; ?>>
+                <input type="text" name="m_name" placeholder=" Add name" <?php echo 'value="' . $m_name . '"'; ?>>
             </p>
             <div class="balance"></div>
 
@@ -225,13 +219,13 @@
             <p class="small-descrip">
                 <label>Small Description:</label>
                 <input name="small_descrip" placeholder=" Add a small description"
-                    <?php echo 'value="' .$small_descrip. '"'; ?>>
+                    <?php echo 'value="' . $small_descrip . '"'; ?>>
             </p>
 
             <div class="balance"></div>
             <p class="m-descrip">
                 <label>Movie Description:</label>
-                <textarea name="m_descrip" placeholder=" Add a description"><?php echo "{$m_descrip}";; ?></textarea>
+                <textarea name="m_descrip" placeholder=" Add a description"><?php echo "{$m_descrip}"; ?></textarea>
                 <!-- <textarea class="article-input" id="article-input" type="text" rows="9" >{{article}}</textarea> -->
             </p>
 
@@ -240,14 +234,14 @@
             <p>
                 <label>Movie Director:</label>
                 <input type="text" name="m_director" placeholder=" Add director"
-                    <?php echo 'value="' .$m_director. '"'; ?>>
+                    <?php echo 'value="' . $m_director . '"'; ?>>
             </p>
 
             <div class="balance"></div>
 
             <p>
                 <label>Movie Writer:</label>
-                <input type="text" name="m_writer" placeholder=" Add writer" <?php echo 'value="' .$m_writer. '"'; ?>>
+                <input type="text" name="m_writer" placeholder=" Add writer" <?php echo 'value="' . $m_writer . '"'; ?>>
             </p>
 
             <div class="balance"></div>
@@ -255,7 +249,7 @@
             <p>
                 <label>Stars:</label>
                 <input type="text" name="stars" placeholder=" Add stars with <br>"
-                    <?php echo 'value="' .$stars. '"'; ?>>
+                    <?php echo 'value="' . $stars . '"'; ?>>
             </p>
 
             <div class="balance"></div>
@@ -263,7 +257,7 @@
             <p>
                 <label>Genres:</label>
                 <input type="text" name="genres" placeholder=" Add genreses with <br>"
-                    <?php echo 'value="' .$genres. '"'; ?>>
+                    <?php echo 'value="' . $genres . '"'; ?>>
             </p>
 
             <div class="balance"></div>
@@ -354,49 +348,49 @@
             <p>
                 <label>Relese date:</label>
                 <input type="text" name="relese_date" placeholder=" Relese date(by letters)"
-                    <?php echo 'value="' .$relese_date. '"'; ?>>
+                    <?php echo 'value="' . $relese_date . '"'; ?>>
             </p>
             <div class="balance"></div>
             <p>
                 <label>Year:</label>
-                <input type="number" name="year" placeholder=" Year" <?php echo 'value="' .$year. '"'; ?>>
+                <input type="number" name="year" placeholder=" Year" <?php echo 'value="' . $year . '"'; ?>>
             </p>
             <div class="balance"></div>
             <p>
                 <label>Run time:</label>
                 <input type="text" name="run_time" placeholder=" Run time(by mins)"
-                    <?php echo 'value="' .$run_time. '"'; ?>>
+                    <?php echo 'value="' . $run_time . '"'; ?>>
             </p>
             <div class="balance"></div>
             <p>
                 <label>Ratings:</label>
                 <input type="number" name="ratings" placeholder=" IMDB ratings(<=10)"
-                    <?php echo 'value="' .$ratings. '"'; ?>>
+                    <?php echo 'value="' . $ratings . '"'; ?>>
             </p>
             <div class="balance"></div>
             <p>
                 <label>Embedded video 01:</label>
                 <input type="text" name="vid1_e_link" placeholder=" Embedded video link 01 (without attributes)"
-                    <?php echo 'value="' .$vid1_e_link. '"'; ?>>
+                    <?php echo 'value="' . $vid1_e_link . '"'; ?>>
             </p>
             <div class="balance"></div>
             <p>
                 <label>Embedded video 02:</label>
                 <input type="text" name="vid2_e_link" placeholder=" Embedded video link 02 (without attributes)"
-                    <?php echo 'value="' .$vid2_e_link. '"'; ?>>
+                    <?php echo 'value="' . $vid2_e_link . '"'; ?>>
             </p>
             <div class="balance"></div>
             <p>
                 <label>Embedded video 03:</label>
                 <input type="text" name="vid3_e_link" placeholder=" Embedded video link 03 (without attributes)"
-                    <?php echo 'value="' .$vid3_e_link. '"'; ?>>
+                    <?php echo 'value="' . $vid3_e_link . '"'; ?>>
             </p>
             <div class="balance"></div>
             <p>
                 <label>Official trailer:</label>
                 <input type="text" name="off_t_e_link"
                     placeholder=" Official trailer embedded link (without attributes)"
-                    <?php echo 'value="' .$off_t_e_link. '"'; ?>>
+                    <?php echo 'value="' . $off_t_e_link . '"'; ?>>
             </p>
             <div class="balance"></div>
 
@@ -480,4 +474,4 @@
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

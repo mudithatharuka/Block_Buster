@@ -1,121 +1,117 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 <?php
-	if(!isset($_SESSION['admin_id'])){
-		header('Location:adminlogin.php?has_logged=false');
-	}
+if (!isset($_SESSION['admin_id'])) {
+    header('Location:adminlogin.php?has_logged=false');
+}
 ?>
 
 <?php
 
-	$errors = array();
-	
-	$usr_id = '';
-	$name = '';
-	$email = '';
-	$password = '';
-	$profile_photo = '';
+$errors = array();
 
-	if(isset($_GET['user_id'])){
-		$usr_id = mysqli_real_escape_string($connection, $_GET['user_id']);
-		$query = "SELECT * FROM users WHERE user_id = '{$usr_id}' LIMIT 1 ";
+$usr_id        = '';
+$name          = '';
+$email         = '';
+$password      = '';
+$profile_photo = '';
 
-		$result_set = mysqli_query($connection, $query);
+if (isset($_GET['user_id'])) {
+    $usr_id = mysqli_real_escape_string($connection, $_GET['user_id']);
+    $query  = "SELECT * FROM users WHERE user_id = '{$usr_id}' LIMIT 1 ";
 
-		if($result_set){
-			if(mysqli_num_rows($result_set) == 1){
-				//User found
-				$result = mysqli_fetch_assoc($result_set);
+    $result_set = mysqli_query($connection, $query);
 
-				$name = $result['name'];
-				$email = $result['email'];
-			}else{
-				//User not found
-				header('Location:users.php?user_found=false');
-			}
-		}else{
-			//Queru unsuccessful
-			header('Location:users.php?query_successful=false');
-		}
-	}
-	// else{
+    if ($result_set) {
+        if (mysqli_num_rows($result_set) == 1) {
+            //User found
+            $result = mysqli_fetch_assoc($result_set);
 
-	// 	 //header('Location:users.php?set_user_id=false');
-	// }
+            $name  = $result['name'];
+            $email = $result['email'];
+        } else {
+            //User not found
+            header('Location:users.php?user_found=false');
+        }
+    } else {
+        //Queru unsuccessful
+        header('Location:users.php?query_successful=false');
+    }
+}
+// else{
 
-	if(isset($_POST['save'])){
+//      //header('Location:users.php?set_user_id=false');
+// }
 
-		$usr_id = $_POST['usr_id'];
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		
-		//Checking required fields
-		$req_fields =array('usr_id', 'name','email');
-		$errors = array_merge($errors, check_req_fields($req_fields));
-		
-		//Checkin required images
-		$req_images =array('profile_photo');
-		$errors = array_merge($errors, check_req_images($req_images));
+if (isset($_POST['save'])) {
 
+    $usr_id = $_POST['usr_id'];
+    $name   = $_POST['name'];
+    $email  = $_POST['email'];
 
-		//Checking max length
-		$max_len_fields =array('name' => 50 ,'email' => 100);
-		$errors = array_merge($errors, check_max_len($max_len_fields));
-		 
+    //Checking required fields
+    $req_fields = array('usr_id', 'name', 'email');
+    $errors     = array_merge($errors, check_req_fields($req_fields));
 
-		//Checking email address
-		if(!is_email($_POST['email'])){
-			$errors[] ='Email address is invalid';
-		}
+    //Checkin required images
+    $req_images = array('profile_photo');
+    $errors     = array_merge($errors, check_req_images($req_images));
 
-		//Checking if email address is already exist
-		$email = mysqli_real_escape_string($connection,$_POST['email']);
-		$query = "SELECT * FROM users WHERE email = '{$email}' AND user_id != '{$usr_id}' LIMIT 1";
+    //Checking max length
+    $max_len_fields = array('name' => 50, 'email' => 100);
+    $errors         = array_merge($errors, check_max_len($max_len_fields));
 
-		$result_set = mysqli_query($connection,$query);
+    //Checking email address
+    if (!is_email($_POST['email'])) {
+        $errors[] = 'Email address is invalid';
+    }
 
-		if($result_set){
-			if(mysqli_num_rows($result_set) == 1){
-				$errors[] = 'Email address already exist';
-			}
-		}
+    //Checking if email address is already exist
+    $email = mysqli_real_escape_string($connection, $_POST['email']);
+    $query = "SELECT * FROM users WHERE email = '{$email}' AND user_id != '{$usr_id}' LIMIT 1";
 
-		if(empty($errors)){
-			//No errors found.. Adding to tha database
-			$name = mysqli_real_escape_string($connection,$_POST['name']);
-			//email is already sanitized
-			
-			$profile_photo = $_FILES['profile_photo']['name'];
+    $result_set = mysqli_query($connection, $query);
 
-			$target = "Post_images/Users/{$usr_id}/".basename($_FILES['profile_photo']['name']);
+    if ($result_set) {
+        if (mysqli_num_rows($result_set) == 1) {
+            $errors[] = 'Email address already exist';
+        }
+    }
 
+    if (empty($errors)) {
+        //No errors found.. Adding to tha database
+        $name = mysqli_real_escape_string($connection, $_POST['name']);
+        //email is already sanitized
 
-			$query = "UPDATE users SET name ='{$name}', email = '{$email}', p_photo = '{$profile_photo}' WHERE user_id = '{$usr_id}' LIMIT 1 ";
+        $profile_photo = $_FILES['profile_photo']['name'];
 
-			
-			$result = mysqli_query($connection, $query);
+        $target = "Post_images/Users/{$usr_id}/" . basename($_FILES['profile_photo']['name']);
 
-			if($result){
-				//Query successful
+        $query = "UPDATE users SET name ='{$name}', email = '{$email}', p_photo = '{$profile_photo}' WHERE user_id = '{$usr_id}' LIMIT 1 ";
 
-				if(move_uploaded_file($_FILES['profile_photo']['tmp_name'], $target)){
+        $result = mysqli_query($connection, $query);
 
-					header('Location:users.php?user_modified_sucessfully=true');
+        if ($result) {
+            //Query successful
 
-				}else{
-					$errors[] = 'Adding failed. Uploded immages did not saved';
-				}
+            if (move_uploaded_file($_FILES['profile_photo']['tmp_name'], $target)) {
 
-			}else{
-				//Query unsucessful
-				$errors[] = 'Database query failed';
-				
-			}
-		
-	}
-		
-	}
+                header('Location:users.php?user_modified_sucessfully=true');
+
+            } else {
+                $errors[] = 'Adding failed. Uploded immages did not saved';
+            }
+
+        } else {
+            //Query unsucessful
+            $errors[] = 'Database query failed';
+
+        }
+
+    }
+
+}
 
 ?>
 <!-- Sign Up Process Over -->
@@ -131,7 +127,7 @@
 
 <body>
 
-    <?php require_once('inc/adminheader.php') ?>
+    <?php require_once 'inc/adminheader.php'?>
 
     <div class="Content">
         <h1>View / Modify Users</h1>
@@ -139,10 +135,10 @@
         <div class="balance"></div>
 
         <?php
-			if(!empty($errors)){
-				display_errors($errors);
-			}
-		?>
+if (!empty($errors)) {
+    display_errors($errors);
+}
+?>
 
         <form method="post" action="modify-user.php" enctype="multipart/form-data">
 
@@ -150,12 +146,12 @@
                 <input type="hidden" name="usr_id" value="<?php echo $usr_id; ?>">
 
                 <p><label>Name:</label>
-                    <input type="text" name="name" placeholder="  Name" <?php echo 'value="' .$name. '"'; ?>>
+                    <input type="text" name="name" placeholder="  Name" <?php echo 'value="' . $name . '"'; ?>>
                 </p>
                 <div class="balance"></div>
 
                 <p><label>User Email:</label>
-                    <input type="text" name="email" placeholder="  Email" <?php echo 'value="' .$email. '"'; ?>>
+                    <input type="text" name="email" placeholder="  Email" <?php echo 'value="' . $email . '"'; ?>>
                 </p>
                 <div class="balance"></div>
 
@@ -191,4 +187,4 @@
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

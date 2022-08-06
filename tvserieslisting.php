@@ -1,10 +1,6 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
-
-
-
-
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +16,7 @@
 
     <div class="Wrapper">
 
-        <?php require_once('inc/hedertvseries.php'); ?>
+        <?php require_once 'inc/hedertvseries.php';?>
 
 
         <div class="Topic">
@@ -43,7 +39,7 @@
 
 
 
-        <?php require_once('inc/hederfinal.php'); ?>
+        <?php require_once 'inc/hederfinal.php';?>
 
 
         <div class="Content">
@@ -54,59 +50,52 @@
 
                 <?php
 
-			$query = "SELECT * FROM tvseries_seq ORDER BY series_id";
-			$try_id = mysqli_query($connection, $query);
-			
+$query  = "SELECT * FROM tvseries_seq ORDER BY series_id";
+$try_id = mysqli_query($connection, $query);
 
+if (mysqli_num_rows($try_id) > 0) {
 
-			if(mysqli_num_rows($try_id) > 0){
+    if (isset($_GET['main_category'])) {
 
+        switch ($_GET['main_category']) {
+            case 'Action':
+                $sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Action' ORDER BY series_id DESC";
+                break;
+            case 'Animation':
+                $sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Animation' ORDER BY series_id DESC";
+                break;
+            case 'Sci-fi':
+                $sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Sci-fi' ORDER BY series_id DESC";
+                break;
+            case 'Comady':
+                $sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Sci-fi' ORDER BY series_id DESC";
+                break;
+            case 'Horror':
+                $sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Horror' ORDER BY series_id DESC";
+                break;
+            case 'Thriller':
+                $sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Thriller' ORDER BY series_id DESC";
+                break;
+        }
 
-				if(isset($_GET['main_category'])){
+    } else if (isset($_GET['find'])) {
+        $moviename   = mysqli_real_escape_string($connection, $_GET['moviename']);
+        $genres      = mysqli_real_escape_string($connection, $_GET['genres']);
+        $ratingrange = mysqli_real_escape_string($connection, $_GET['ratingrange']);
+        $fromyear    = mysqli_real_escape_string($connection, $_GET['fromyear']);
+        $toyear      = mysqli_real_escape_string($connection, $_GET['toyear']);
 
-					switch ($_GET['main_category']) {
-					case 'Action':
-						$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Action' ORDER BY series_id DESC";
-						break;
-					case 'Animation':
-						$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Animation' ORDER BY series_id DESC";
-						break;
-					case 'Sci-fi':
-						$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Sci-fi' ORDER BY series_id DESC";
-						break;
-					case 'Comady':
-						$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Sci-fi' ORDER BY series_id DESC";
-						break;
-					case 'Horror':
-						$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Horror' ORDER BY series_id DESC";
-						break;
-					case 'Thriller':
-						$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND main_category ='Thriller' ORDER BY series_id DESC";
-						break;
-					}
+        $sql = "SELECT * FROM tvseries WHERE (s_name LIKE '%{$moviename}%' OR main_category LIKE '%{$genres}%' OR year > '{$fromyear}' OR year < '{$toyear}') AND ratings > '{$ratingrange}' AND is_deleted = 0";
+    } else if (isset($_GET['topsearch'])) {
+        $sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND language ='Hollywood' AND s_name = '{$_GET['name']}' ORDER BY series_id DESC";
+    } else {
+        $sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND condi ='Relesed' ORDER BY series_id DESC";
+    }
 
-				}else if(isset($_GET['find'])){
-						$moviename = mysqli_real_escape_string($connection, $_GET['moviename']);
-						$genres = mysqli_real_escape_string($connection, $_GET['genres']);
-						$ratingrange = mysqli_real_escape_string($connection, $_GET['ratingrange']);
-						$fromyear = mysqli_real_escape_string($connection, $_GET['fromyear']);
-						$toyear = mysqli_real_escape_string($connection, $_GET['toyear']);
+    $result      = mysqli_query($connection, $sql);
+    $num_results = mysqli_num_rows($result);
 
-						$sql = "SELECT * FROM tvseries WHERE (s_name LIKE '%{$moviename}%' OR main_category LIKE '%{$genres}%' OR year > '{$fromyear}' OR year < '{$toyear}') AND ratings > '{$ratingrange}' AND is_deleted = 0";
-				}else if(isset($_GET['topsearch'])){
-						$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND language ='Hollywood' AND s_name = '{$_GET['name']}' ORDER BY series_id DESC";
-				}else{
-						$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND condi ='Relesed' ORDER BY series_id DESC";
-				}
-
-				$result = mysqli_query($connection, $sql);
-				$num_results = mysqli_num_rows($result);
-
-
-			?>
-
-
-
+    ?>
 
                 <div class="Heading">
                     <h5>Found <?php echo "{$num_results}"; ?> tv series in total</h5>
@@ -122,32 +111,22 @@
 
 
 
-                <?php 
+                <?php
 
+    if (mysqli_num_rows($result) > 0) {
 
-				if (mysqli_num_rows($result) > 0)
-				{
-				 
+        while ($row = mysqli_fetch_assoc($result)) {
 
-				 	while($row = mysqli_fetch_assoc($result)){
-				    
-				      
-			
-
-
-			?>
-
-
-
+            ?>
                 <div class="List">
-                    <a href="<?php echo("singletvseries.php?series_id={$row['series_id']}") ?>">
+                    <a href="<?php echo ("singletvseries.php?series_id={$row['series_id']}") ?>">
                         <div class="movie">
                             <img
                                 src="Post_images/TVSeries/<?php echo $row['series_id']; ?>/<?php echo $row['main_img']; ?>">
-                            <?php $b_color = define_b_color($row['main_category']); ?>
+                            <?php $b_color = define_b_color($row['main_category']);?>
                             <h6 style="background-color: <?php echo $b_color; ?>;"><?php echo $row['main_category']; ?>
                             </h6>
-                            <h3><i class="fas fa-star"></i><?php echo $row['ratings']."/10"; ?></h3>
+                            <h3><i class="fas fa-star"></i><?php echo $row['ratings'] . "/10"; ?></h3>
                             <h2><?php echo $row["s_name"]; ?></h2>
                         </div>
                     </a>
@@ -158,14 +137,12 @@
 
 
                 <?php
-			
-					}
-				}
-			}else{
 
-			?>
+        }
+    }
+} else {
 
-
+    ?>
                 <div class="Heading">
                     <h5>Found 0 tv series in total</h5>
                     <h6> View model:</h6>
@@ -180,10 +157,8 @@
 
 
                 <?php
-					}
-			?>
-
-
+}
+?>
 
                 <div class="balance">
 
@@ -304,11 +279,11 @@
         <!--Content-->
 
 
-        <?php require_once('inc/footer.php') ?>
+        <?php require_once 'inc/footer.php'?>
 
-        <?php require_once('inc/signup.php') ?>
+        <?php require_once 'inc/signup.php'?>
 
-        <?php require_once('inc/login.php') ?>
+        <?php require_once 'inc/login.php'?>
 
     </div>
     <!--Wrapper-->
@@ -316,4 +291,4 @@
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title></title>
+    <title></title>
 </head>
+
 <body>
-			</div><!--Header-->
+    </div>
+    <!--Header-->
 
-			
 
-		</div><!--Background-->
+
+    </div>
+    <!--Background-->
 </body>
+
 </html>

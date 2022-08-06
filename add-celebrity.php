@@ -1,6 +1,6 @@
-<?php session_start(); ?>
-<?php require_once 'inc/connection.php' ?>
-<?php require_once 'inc/functions.php' ?>
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 <?php
 if (!isset($_SESSION['admin_id'])) {
     header('Location:adminlogin.php?has_logged=false');
@@ -140,7 +140,7 @@ if (isset($_POST['add-celebrity'])) {
 
 <body>
 
-    <?php require_once 'inc/adminheader.php' ?>
+    <?php require_once 'inc/adminheader.php'?>
 
     <div class="Content">
         <h1>Add Celebrities</h1>
@@ -260,4 +260,4 @@ if (!empty($errors)) {
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

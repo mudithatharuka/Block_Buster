@@ -1,42 +1,36 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
 
 
 <?php
 
-			$query = "SELECT * FROM tvseries_seq ORDER BY series_id";
-			$try_id = mysqli_query($connection, $query);
-			
+$query  = "SELECT * FROM tvseries_seq ORDER BY series_id";
+$try_id = mysqli_query($connection, $query);
 
+if (mysqli_num_rows($try_id) > 0) {
 
-			if(mysqli_num_rows($try_id) > 0){
+    if (isset($_GET['popular'])) {
+        $sql   = "SELECT * FROM tvseries WHERE is_deleted = 0 AND ratings > 5 ORDER BY series_id DESC";
+        $topic = 'MOST POPULAR TV SERIES';
+    } else if (isset($_GET['comming_soon'])) {
+        $sql   = "SELECT * FROM tvseries WHERE is_deleted = 0 AND condi = 'Comming soon' ORDER BY series_id DESC";
+        $topic = 'COMMING SOON';
+    } else if (isset($_GET['top_rated'])) {
+        $sql   = "SELECT * FROM tvseries WHERE is_deleted = 0 AND ratings > 6 ORDER BY series_id DESC";
+        $topic = 'TOP RATED';
+    } else if (isset($_GET['most_reviewed'])) {
+        $sql   = "SELECT * FROM tvseries WHERE is_deleted = 0 AND ratings > 6 ORDER BY series_id DESC";
+        $topic = 'MOST REVIEWED';
+    } else {
+        $sql   = "SELECT * FROM tvseries WHERE is_deleted = 0 AND condi ='Relesed' ORDER BY series_id DESC";
+        $topic = 'TVSERIESLISTING';
+    }
 
-				if(isset($_GET['popular'])){
-					$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND ratings > 5 ORDER BY series_id DESC";
-					$topic = 'MOST POPULAR TV SERIES';
-				}
-				else if(isset($_GET['comming_soon'])){
-					$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND condi = 'Comming soon' ORDER BY series_id DESC";
-					$topic = 'COMMING SOON';
-				}
-				else if(isset($_GET['top_rated'])){
-					$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND ratings > 6 ORDER BY series_id DESC";
-					$topic = 'TOP RATED';
-				}
-				else if(isset($_GET['most_reviewed'])){
-					$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND ratings > 6 ORDER BY series_id DESC";
-					$topic = 'MOST REVIEWED';
-				}else{
-					$sql = "SELECT * FROM tvseries WHERE is_deleted = 0 AND condi ='Relesed' ORDER BY series_id DESC";
-					$topic = 'TVSERIESLISTING';
-				}
+    $result      = mysqli_query($connection, $sql);
+    $num_results = mysqli_num_rows($result);
 
-				$result = mysqli_query($connection, $sql);
-				$num_results = mysqli_num_rows($result);
-
-
-			?>
+    ?>
 
 
 
@@ -54,7 +48,7 @@
 
     <div class="Wrapper">
 
-        <?php require_once('inc/hedertvseries.php'); ?>
+        <?php require_once 'inc/hedertvseries.php';?>
 
 
         <div class="Topic">
@@ -64,7 +58,7 @@
 
 
 
-        <?php require_once('inc/hederfinal.php'); ?>
+        <?php require_once 'inc/hederfinal.php';?>
 
 
         <div class="Content">
@@ -91,32 +85,25 @@
 
 
 
-                <?php 
+                <?php
 
+    if (mysqli_num_rows($result) > 0) {
 
-				if (mysqli_num_rows($result) > 0)
-				{
-				 
+        while ($row = mysqli_fetch_assoc($result)) {
 
-				 	while($row = mysqli_fetch_assoc($result)){
-				    
-				      
-			
-
-
-			?>
+            ?>
 
 
 
                 <div class="List">
-                    <a href="<?php echo("singletvseries.php?series_id={$row['series_id']}") ?>">
+                    <a href="<?php echo ("singletvseries.php?series_id={$row['series_id']}") ?>">
                         <div class="movie">
                             <img
                                 src="Post_images/TVSeries/<?php echo $row['series_id']; ?>/<?php echo $row['main_img']; ?>">
-                            <?php $b_color = define_b_color($row['main_category']); ?>
+                            <?php $b_color = define_b_color($row['main_category']);?>
                             <h6 style="background-color: <?php echo $b_color; ?>;"><?php echo $row['main_category']; ?>
                             </h6>
-                            <h3><i class="fas fa-star"></i><?php echo $row['ratings']."/10"; ?></h3>
+                            <h3><i class="fas fa-star"></i><?php echo $row['ratings'] . "/10"; ?></h3>
                             <h2><?php echo $row["s_name"]; ?></h2>
                         </div>
                     </a>
@@ -127,12 +114,12 @@
 
 
                 <?php
-			
-					}
-				}
-			}else{
 
-			?>
+        }
+    }
+} else {
+
+    ?>
 
 
                 <div class="Heading">
@@ -149,8 +136,8 @@
 
 
                 <?php
-					}
-			?>
+}
+?>
 
 
 
@@ -269,11 +256,11 @@
         <!--Content-->
 
 
-        <?php require_once('inc/footer.php') ?>
+        <?php require_once 'inc/footer.php'?>
 
-        <?php require_once('inc/signup.php') ?>
+        <?php require_once 'inc/signup.php'?>
 
-        <?php require_once('inc/login.php') ?>
+        <?php require_once 'inc/login.php'?>
 
     </div>
     <!--Wrapper-->
@@ -281,4 +268,4 @@
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

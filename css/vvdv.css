@@ -1,94 +1,89 @@
-.Ontv h2{
-	color: #fff;
-	font-family: sans-serif;
-	float: left;
-	padding-bottom: 20px;
+.Ontv h2 {
+  color: #fff;
+  font-family: sans-serif;
+  float: left;
+  padding-bottom: 20px;
 }
-.Ontv h5{
-	padding-top: 15px;
-	color: grey;
-	font-family: sans-serif;
-	float: right;
+.Ontv h5 {
+  padding-top: 15px;
+  color: grey;
+  font-family: sans-serif;
+  float: right;
 }
-.Slider3{
-	clear: both;
-	width: 100%;
-	padding: 10px 0;
-	overflow: hidden;
+.Slider3 {
+  clear: both;
+  width: 100%;
+  padding: 10px 0;
+  overflow: hidden;
 }
-.Slides3{
-	width: 500%;
-	display: flex;
+.Slides3 {
+  width: 500%;
+  display: flex;
 }
-.Slides3 input{
-	display: none;
+.Slides3 input {
+  display: none;
 }
-.Slide3{
-	width: 20%;
-	transition: 2s;
-	
+.Slide3 {
+  width: 20%;
+  transition: 2s;
 }
-.Slide3 div{
-	margin: 0 1%;
-	width: 23%;
-	color: #fff;
-	float: left;
-	font-family: sans-serif;
+.Slide3 div {
+  margin: 0 1%;
+  width: 23%;
+  color: #fff;
+  float: left;
+  font-family: sans-serif;
 }
-.Slide3 div h6{
-	margin: 7px 0;
-	padding: 6px 8px;
-	border-radius: 5px;
-	float: left;
-	background-color: red;
-	
-}.Slide3 div h3{
-	float: right;
-	margin-right: 5%;
-	margin-top: 7px;
-	font-size: 14px;
-}.Slide3 div h2{
-	clear: both;
-	font-size: 19px;
+.Slide3 div h6 {
+  margin: 7px 0;
+  padding: 6px 8px;
+  border-radius: 5px;
+  float: left;
+  background-color: red;
 }
-.Slide3 img{
-	
-	width: 100%;
-	height: 230px;
+.Slide3 div h3 {
+  float: right;
+  margin-right: 5%;
+  margin-top: 7px;
+  font-size: 14px;
 }
-.Slide3 h3 i{
-	color: orange;
+.Slide3 div h2 {
+  clear: both;
+  font-size: 19px;
 }
-.Nevigation-manual3{
-	
-	display: flex;
-	float: right;
-	
-	
-	
-	
+.Slide3 img {
+  width: 100%;
+  height: 230px;
 }
-.manual-btn3{
-	border: 2px solid white;
-	margin: 5px;
-	padding: 5px;
-	border-radius: 10px;
-	cursor: pointer;
-	transition: 1s;
+.Slide3 h3 i {
+  color: orange;
 }
-.manual-btn3:not(:last-child){
-	
+.Nevigation-manual3 {
+  display: flex;
+  float: right;
 }
-.manual-btn3:hover{
-	background: yellow;
+.manual-btn3 {
+  border: 2px solid white;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 1s;
 }
 
-#radi6:checked ~ .first3{
-	margin-left: 0;
-}#radi10:checked ~ .first3{
-	margin-left: -20%;
-}#radi11:checked ~ .first3{
-	margin-left: -40%;
-}#radi12:checked ~ .first3{
-	margin-left: -60%;
+.manual-btn3:hover {
+  background: yellow;
+}
+
+#radi6:checked ~ .first3 {
+  margin-left: 0;
+}
+#radi10:checked ~ .first3 {
+  margin-left: -20%;
+}
+#radi11:checked ~ .first3 {
+  margin-left: -40%;
+}
+#radi12:checked ~ .first3 {
+  margin-left: -60%;
 }

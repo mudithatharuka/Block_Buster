@@ -1,168 +1,167 @@
-* {margin: 0; padding: 0;}
-.clearfix{overflow: auto;}
-a {text-decoration: none;}
-
-body{
-	font-family: cursive;
-	background-color: #1d2b32;
-	color: #fff;
+* {
+  margin: 0;
+  padding: 0;
+}
+.clearfix {
+  overflow: auto;
+}
+a {
+  text-decoration: none;
 }
 
-.Login{
-	width: 40%;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	box-sizing: border-box;	
- 	padding: 10px;
-	border-radius: 30px;
-	background-color: #293940;
-}
-.Login h1{
-	text-align: center;
-	padding-top: 30px;
-
-}
-.Login h3{
-	text-align: center;
-	padding-bottom: 30px;
-	border-bottom: 2px solid #375051;
-}
-.Loginform form{
-	
-	padding: 30px 0;
-	
-}
-.Loginform form h2{
-	text-align: center;
-	margin-bottom: 30px;
-	margin-top: 15px;
-}
-.Loginform form label{
-	font-weight: bold;
-	font-size: 15px;
-	margin-left: 15%;
-}
-.Loginform form input{
-	width: 70%;
-	font-family: cursive;
-	height: 25px;
-	margin: 5px 15% 25px 15%;
-	color: #ccc;
-	background-color: #1d2b32;
-	border: none;
-	padding: 2px 0px;
-	border: 2px solid #1d2b32;
-	border-bottom: 2px solid #375051;
-	border-radius: 20px;
-}
-.Loginform form button{
-	width: 71%;
-	height: 30px;
-	font-family: cursive;
-	font-weight: bold;
-	margin: 20px 15%;
-	background-color: #375051;
-	border: none;
-	color: #fff;
-	padding: 3px 5px;
-	border-radius: 20px;
-	transition: .4s;
-}
-.Loginform form button:hover{
-	cursor: pointer;
-	background-color: #dd003f;
+body {
+  font-family: cursive;
+  background-color: #1d2b32;
+  color: #fff;
 }
 
+.Login {
+  width: 40%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 30px;
+  background-color: #293940;
+}
+.Login h1 {
+  text-align: center;
+  padding-top: 30px;
+}
+.Login h3 {
+  text-align: center;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #375051;
+}
+.Loginform form {
+  padding: 30px 0;
+}
+.Loginform form h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 15px;
+}
+.Loginform form label {
+  font-weight: bold;
+  font-size: 15px;
+  margin-left: 15%;
+}
+.Loginform form input {
+  width: 70%;
+  font-family: cursive;
+  height: 25px;
+  margin: 5px 15% 25px 15%;
+  color: #ccc;
+  background-color: #1d2b32;
+  border: none;
+  padding: 2px 0px;
+  border: 2px solid #1d2b32;
+  border-bottom: 2px solid #375051;
+  border-radius: 20px;
+}
+.Loginform form button {
+  width: 71%;
+  height: 30px;
+  font-family: cursive;
+  font-weight: bold;
+  margin: 20px 15%;
+  background-color: #375051;
+  border: none;
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 20px;
+  transition: 0.4s;
+}
+.Loginform form button:hover {
+  cursor: pointer;
+  background-color: #dd003f;
+}
 
-.Signup{
-	width: 40%;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	box-sizing: border-box;	
- 	padding: 10px;
-	border-radius: 30px;
-	background-color: #293940;
+.Signup {
+  width: 40%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 30px;
+  background-color: #293940;
 }
-.Signup h1{
-	text-align: center;
-	padding-top: 20px;
-
+.Signup h1 {
+  text-align: center;
+  padding-top: 20px;
 }
-.Signup h3{
-	text-align: center;
-	padding-bottom: 20px;
-	border-bottom: 2px solid #375051;
+.Signup h3 {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #375051;
 }
-.Loginform form{
-	
-	padding: 30px 0;
-	
+.Loginform form {
+  padding: 30px 0;
 }
-.Signup form h2{
-	text-align: center;
-	margin-bottom: 20px;
-	margin-top: 5px;
+.Signup form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 5px;
 }
-.Signup form label{
-	font-weight: bold;
-	font-size: 15px;
-	margin-left: 15%;
+.Signup form label {
+  font-weight: bold;
+  font-size: 15px;
+  margin-left: 15%;
 }
-.Signupform form input{
-	width: 70%;
-	font-family: cursive;
-	height: 25px;
-	margin: 5px 15% 15px 15%;
-	background-color: #1d2b32;
-	border: none;
-	padding: 2px 0px;
-	border: 2px solid #1d2b32;
-	border-bottom: 2px solid #375051;
-	border-radius: 20px;
+.Signupform form input {
+  width: 70%;
+  font-family: cursive;
+  height: 25px;
+  margin: 5px 15% 15px 15%;
+  background-color: #1d2b32;
+  border: none;
+  padding: 2px 0px;
+  border: 2px solid #1d2b32;
+  border-bottom: 2px solid #375051;
+  border-radius: 20px;
 }
-.Signupform form button{
-	width: 71%;
-	height: 30px;
-	font-family: cursive;
-	font-weight: bold;
-	margin: 20px 15% 40px 15%;
-	background-color: #375051;
-	border: none;
-	color: #fff;
-	padding: 3px 5px;
-	border-radius: 20px;
-	transition: .4s;
+.Signupform form button {
+  width: 71%;
+  height: 30px;
+  font-family: cursive;
+  font-weight: bold;
+  margin: 20px 15% 40px 15%;
+  background-color: #375051;
+  border: none;
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 20px;
+  transition: 0.4s;
 }
-.Signupform form button:hover{
-	background-color: #dd003f;
-	cursor: pointer;
+.Signupform form button:hover {
+  background-color: #dd003f;
+  cursor: pointer;
 }
-.error{
-	background-color: #F81c2c;
-	color: #fff;
-	margin: 0 15%;
-	margin-bottom: 15px;
-	width: 70.5%;
-	padding: 5px 0;
-	border-radius: 20px;
-	text-align: center;
+.error {
+  background-color: #f81c2c;
+  color: #fff;
+  margin: 0 15%;
+  margin-bottom: 15px;
+  width: 70.5%;
+  padding: 5px 0;
+  border-radius: 20px;
+  text-align: center;
 }
-.cool{
-	background-color: #7bf254;
-	margin: 0 15%;
-	margin-bottom: 15px;
-	width: 70.5%;
-	padding: 5px 0;
-	text-align: center;
-	border-radius: 20px;
-	color: #1d2b32;
-
+.cool {
+  background-color: #7bf254;
+  margin: 0 15%;
+  margin-bottom: 15px;
+  width: 70.5%;
+  padding: 5px 0;
+  text-align: center;
+  border-radius: 20px;
+  color: #1d2b32;
 }
-.errmsg{
-	margin: 0 0 5px 15%;
-	color: #F81c2c;
+.errmsg {
+  margin: 0 0 5px 15%;
+  color: #f81c2c;
 }

@@ -1,30 +1,29 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
-<?php 
-		if(!isset($_GET['ltn_id'])){
-			header('Location:index.php?ltn_id=false');
-		}else{
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
+<?php
+if (!isset($_GET['ltn_id'])) {
+    header('Location:index.php?ltn_id=false');
+} else {
 
-			$query = "SELECT * FROM latestnews WHERE ltn_id = '{$_GET['ltn_id']}' AND is_deleted = 0 LIMIT 1";
-			$result = mysqli_query($connection, $query);
+    $query  = "SELECT * FROM latestnews WHERE ltn_id = '{$_GET['ltn_id']}' AND is_deleted = 0 LIMIT 1";
+    $result = mysqli_query($connection, $query);
 
-			if(mysqli_num_rows($result) == 1){
+    if (mysqli_num_rows($result) == 1) {
 
-				$query = "SELECT * FROM latestnews WHERE ltn_id = '{$_GET['ltn_id']}' LIMIT 1";
-				$result = mysqli_query($connection, $query);
+        $query  = "SELECT * FROM latestnews WHERE ltn_id = '{$_GET['ltn_id']}' LIMIT 1";
+        $result = mysqli_query($connection, $query);
 
-				if($result){
-					$data = mysqli_fetch_assoc($result);
-				}else{
-					header('Location:index.php?retrive=false');
-				}
-			}else{
-				header('Location:index.php?is_deleted_or_not uploaded=true');
-			}
+        if ($result) {
+            $data = mysqli_fetch_assoc($result);
+        } else {
+            header('Location:index.php?retrive=false');
+        }
+    } else {
+        header('Location:index.php?is_deleted_or_not uploaded=true');
+    }
 
-
-		}
+}
 
 ?>
 
@@ -42,7 +41,7 @@
 
 <body>
 
-    <?php require_once('inc/hedersingle.php'); ?>
+    <?php require_once 'inc/hedersingle.php';?>
 
 
 
@@ -61,21 +60,21 @@
         </div>
 
         <div class="Ratingbar">
-            <h5><i class="fas fa-star"></i> <?php echo($data['ratings']); ?>/10 </h5>
+            <h5><i class="fas fa-star"></i> <?php echo ($data['ratings']); ?>/10 </h5>
 
             <h4>Level of the watchers responce:
-                <?php 
-				$stars = 0;
-				$empstars = 0;
-				while ($stars < $data['ratings']) {
-					?><i class="fas fa-star"></i><?php
-					$stars++;
-				}
-				while($empstars < 10 - $data['ratings']){
-					?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
-					$empstars++;
-				}
-			?></h4>
+                <?php
+$stars    = 0;
+$empstars = 0;
+while ($stars < $data['ratings']) {
+    ?><i class="fas fa-star"></i><?php
+$stars++;
+}
+while ($empstars < 10 - $data['ratings']) {
+    ?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
+$empstars++;
+}
+?></h4>
 
         </div>
         <!--Ratingbar-->
@@ -90,7 +89,7 @@
 
 
 
-    <?php require_once('inc/hederfinal.php'); ?>
+    <?php require_once 'inc/hederfinal.php';?>
 
 
     <div class="Content">
@@ -105,8 +104,8 @@
 
 
             <div class="Overview">
-                <h2><?php echo($data['movie_name']); ?></h2>
-                <p><?php echo($data['n_descrip']); ?></p>
+                <h2><?php echo ($data['movie_name']); ?></h2>
+                <p><?php echo ($data['n_descrip']); ?></p>
 
 
 
@@ -125,13 +124,13 @@
 
             <div class="Summery">
                 <h5>Main category:</h5>
-                <h6><?php echo($data['category']); ?>.</h6>
+                <h6><?php echo ($data['category']); ?>.</h6>
                 <h5>Generes:</h5>
-                <h6><?php echo($data['genres']); ?></h6>
+                <h6><?php echo ($data['genres']); ?></h6>
                 <h5>Stars:</h5>
-                <h6><?php echo($data['stars']); ?></h6>
+                <h6><?php echo ($data['stars']); ?></h6>
                 <h5>Relese date:</h5>
-                <h6><?php echo($data['relese_date']); ?></h6>
+                <h6><?php echo ($data['relese_date']); ?></h6>
 
                 <div class="Advertiesment1">
                     <img src="img/LatestMv/slider4.jpg" align="Advertiesment1">
@@ -157,13 +156,13 @@
 
 
 
-    <?php require_once('inc/footer.php') ?>
+    <?php require_once 'inc/footer.php'?>
 
-    <?php require_once('inc/signup.php') ?>
+    <?php require_once 'inc/signup.php'?>
 
-    <?php require_once('inc/login.php') ?>
+    <?php require_once 'inc/login.php'?>
 
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>

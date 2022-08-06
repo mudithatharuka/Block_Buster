@@ -1,28 +1,23 @@
-<?php session_start(); ?>
-<?php require_once('inc/connection.php') ?>
-<?php require_once('inc/functions.php') ?>
-<?php 
-		if(!isset($_GET['series_id'])){
-			header('Location:tvserieslisting.php?series_id=false');
-		}else{
+<?php session_start();?>
+<?php require_once 'inc/connection.php'?>
+<?php require_once 'inc/functions.php'?>
+<?php
+if (!isset($_GET['series_id'])) {
+    header('Location:tvserieslisting.php?series_id=false');
+} else {
 
-			$query = "SELECT * FROM tvseries WHERE series_id = '{$_GET['series_id']}' LIMIT 1";
-			$result = mysqli_query($connection, $query);
+    $query  = "SELECT * FROM tvseries WHERE series_id = '{$_GET['series_id']}' LIMIT 1";
+    $result = mysqli_query($connection, $query);
 
-			if($result){
-				$data = mysqli_fetch_assoc($result);
-			}else{
-				header('Location:tvserieslisting.php?retrive=false');
-			}
+    if ($result) {
+        $data = mysqli_fetch_assoc($result);
+    } else {
+        header('Location:tvserieslisting.php?retrive=false');
+    }
 
-		}
+}
 
 ?>
-
-
-
-
-
 
 <!DOCTYPE html>
 <html>
@@ -36,7 +31,7 @@
 
 <body>
 
-    <?php require_once('inc/hedersingletvseries.php'); ?>
+    <?php require_once 'inc/hedersingletvseries.php';?>
 
 
 
@@ -59,18 +54,18 @@
             <h5><i class="fas fa-star"></i> <?php echo $data['ratings']; ?>/10 </h5>
 
             <h4>Rate this TV series:
-                <?php 
-				$stars = 0;
-				$empstars = 0;
-				while ($stars < $data['ratings']) {
-					?><i class="fas fa-star"></i><?php
-					$stars++;
-				}
-				while($empstars < 10 - $data['ratings']){
-					?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
-					$empstars++;
-				}
-			?></h4>
+                <?php
+$stars    = 0;
+$empstars = 0;
+while ($stars < $data['ratings']) {
+    ?><i class="fas fa-star"></i><?php
+$stars++;
+}
+while ($empstars < 10 - $data['ratings']) {
+    ?><i class="fas fa-star" style="color: rgba(105, 105, 105, 0.6);"></i><?php
+$empstars++;
+}
+?></h4>
         </div>
         <!--Ratingbar-->
         <div class="balance">
@@ -84,7 +79,7 @@
 
 
 
-    <?php require_once('inc/hederfinal.php'); ?>
+    <?php require_once 'inc/hederfinal.php';?>
 
 
     <div class="Content">
@@ -98,12 +93,12 @@
         <div class="Cont-R">
             <div class="Items">
                 <ul>
-                    <li><a href="<?php echo("singletvseries.php?series_id={$_GET['series_id']}") ?>">OVERVIEW</a></li>
-                    <li><a href="<?php echo("singletvseries-review.php?series_id={$_GET['series_id']}") ?>">REVIEWS</a>
+                    <li><a href="<?php echo ("singletvseries.php?series_id={$_GET['series_id']}") ?>">OVERVIEW</a></li>
+                    <li><a href="<?php echo ("singletvseries-review.php?series_id={$_GET['series_id']}") ?>">REVIEWS</a>
                     </li>
-                    <li><a href="<?php echo("singletvseries-media.php?series_id={$_GET['series_id']}") ?>">MEDIA</a>
+                    <li><a href="<?php echo ("singletvseries-media.php?series_id={$_GET['series_id']}") ?>">MEDIA</a>
                     </li>
-                    <li><a href="<?php echo("singletvseries-relatedtvseries.php?series_id={$_GET['series_id']}") ?>">RELATED
+                    <li><a href="<?php echo ("singletvseries-relatedtvseries.php?series_id={$_GET['series_id']}") ?>">RELATED
                             SERIES</a></li>
                 </ul>
             </div>
@@ -123,23 +118,19 @@
 
 
 
-            <?php 
+            <?php
 
-				$sql = "SELECT * FROM tvseries WHERE condi = 'Relesed' AND is_deleted = 0 AND series_id != '{$_GET['series_id']}' AND (main_category = '{$data['main_category']}' OR {$data['main_category']} = 'Yes') ORDER BY series_id DESC";
-				$conseq = mysqli_query($connection, $sql);
+$sql    = "SELECT * FROM tvseries WHERE condi = 'Relesed' AND is_deleted = 0 AND series_id != '{$_GET['series_id']}' AND (main_category = '{$data['main_category']}' OR {$data['main_category']} = 'Yes') ORDER BY series_id DESC";
+$conseq = mysqli_query($connection, $sql);
 
-				if(mysqli_num_rows($conseq) > 0){
+if (mysqli_num_rows($conseq) > 0) {
 
-					while($row = mysqli_fetch_assoc($conseq)){
+    while ($row = mysqli_fetch_assoc($conseq)) {
 
-					
-				
-				
-
-			?>
+        ?>
 
 
-            <a href="<?php echo("singletvseries.php?series_id={$row['series_id']}") ?>">
+            <a href="<?php echo ("singletvseries.php?series_id={$row['series_id']}") ?>">
 
                 <div class="Related-movies">
                     <img src="Post_images/TVSeries/<?php echo $row['series_id']; ?>/<?php echo $row['main_img']; ?>"
@@ -169,20 +160,20 @@
 
 
 
-            <?php  
+            <?php
 
-					}
-				}else{
-			?>
+    }
+} else {
+    ?>
 
             <div class="Related-movies">
                 <h4>No tv series related to <?php echo $data['s_name']; ?></h4>
             </div><!-- Related-movies -->
 
-            <?php		
-				}
+            <?php
+}
 
-			?>
+?>
 
 
 
@@ -198,13 +189,13 @@
 
 
 
-    <?php require_once('inc/footer.php') ?>
+    <?php require_once 'inc/footer.php'?>
 
-    <?php require_once('inc/signup.php') ?>
+    <?php require_once 'inc/signup.php'?>
 
-    <?php require_once('inc/login.php') ?>
+    <?php require_once 'inc/login.php'?>
 
 </body>
 
 </html>
-<?php mysqli_close($connection); ?>
+<?php mysqli_close($connection);?>
