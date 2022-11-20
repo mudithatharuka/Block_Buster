@@ -1,0 +1,187 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.clearfix {
+  overflow: auto;
+}
+a {
+  text-decoration: none;
+}
+*:hover {
+  transition: 0.4s;
+}
+body {
+  background-color: #020d18;
+  font-family: sans-serif;
+}
+.Body {
+  margin: 0 auto;
+  width: 75%;
+}
+
+.FBackground {
+  background: url(../img/netflix-mosaique-series-tele-tv.png);
+}
+.FooterBack {
+  background-color: rgba(1, 13, 35, 0.85);
+}
+.Footer {
+  width: 75%;
+  margin: 0 auto;
+  padding: 50px 0;
+  color: #a7b4c2;
+  overflow: auto;
+}
+.Footer h3 {
+  padding-bottom: 20px;
+  color: white;
+}
+.Footer a {
+  display: block;
+  color: #a7b4c2;
+  font-family: sans-serif;
+  margin-bottom: 9px;
+  font-size: 15px;
+  border-bottom: 1px solid transparent;
+}
+.Footer a:hover {
+  /*border-bottom: 1px solid #a7b4c2;*/
+  cursor: pointer;
+  color: #dd003f;
+  transition-duration: 0.7s;
+}
+.Fmcol {
+  width: 27.5%;
+  float: left;
+  overflow: auto;
+}
+.Fncol {
+  width: 15%;
+  float: left;
+  box-sizing: border-box;
+}
+.Fmcol button {
+  color: #dd003f;
+  background-color: transparent;
+  font-family: sans-serif;
+  font-weight: bold;
+  border: none;
+}
+.Fmcol button:hover {
+  cursor: pointer;
+  border-bottom: 1px solid #dd003f;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 5);
+  transition-duration: 0.5s;
+}
+.Fmcol input {
+  margin-bottom: 20px;
+  width: 100%;
+  background-color: transparent;
+  border-radius: 3px;
+  padding: 7px 0;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+}
+.Fmcol p {
+  color: #a7b4c2;
+  font-family: sans-serif;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+.Fmcol img {
+  margin-bottom: 50px;
+}
+.Last {
+  clear: both;
+  height: 45px;
+  background-color: #000015;
+  opacity: 0.9;
+}
+.Last h5 {
+  text-align: center;
+  color: #a7b4c2;
+  padding-top: 15px;
+}
+
+/*Media Queryf for Footer file*/
+@media screen and (max-width: 1200px) {
+  .Fncol {
+    height: 250px;
+    width: 24%;
+    text-align: right;
+  }
+  .Newsteller {
+    width: 40%;
+  }
+}
+@media screen and (max-width: 900px) {
+  .Fncol {
+    height: 250px;
+    width: 36%;
+    text-align: right;
+  }
+  .Account {
+    text-align: left;
+  }
+  .Newsteller {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .Fmcol {
+    width: 40%;
+  }
+  .Fncol {
+    width: 30%;
+  }
+  .Newsteller {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .Fncol {
+    width: 50%;
+  }
+  .Fmcol {
+    width: 50%;
+  }
+  .Leagle {
+    text-align: left;
+  }
+  .Account {
+    text-align: right;
+  }
+  .Newsteller {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .Resources {
+    width: 30%;
+  }
+  .Fmcol {
+    width: 70%;
+  }
+  .Newsteller {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 370px) {
+  .Fncol {
+    width: 100%;
+    text-align: left;
+  }
+  .Fmcol {
+    width: 100%;
+  }
+  .Resources {
+    padding-top: 30px;
+  }
+  .Leagle {
+    height: 150px;
+  }
+  .Account {
+    height: 200px;
+  }
+}

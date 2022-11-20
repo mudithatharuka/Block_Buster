@@ -1,0 +1,364 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.clearfix {
+  overflow: auto;
+}
+a {
+  text-decoration: none;
+}
+*:hover {
+  transition: 0.4s;
+}
+body {
+  background-color: #020d18;
+  font-family: sans-serif;
+}
+.Body {
+  margin: 0 auto;
+  width: 75%;
+}
+.balance {
+  clear: both;
+  height: 1px;
+}
+
+.Background {
+  background: url(../img/netflix-mosaique-series-tele-tv.png);
+  background-size: cover;
+  background-position: center;
+}
+.Header {
+  background-color: rgba(1, 13, 35, 0.85);
+}
+
+.NavBar {
+  padding-top: 30px;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+}
+.NavBar img {
+  float: left;
+}
+
+.NavBar .List1 ul li {
+  font-size: 14px;
+  margin-left: 4%;
+  padding-top: 20px;
+  float: left;
+  display: inline-block;
+}
+.NavBar ul li a {
+  color: #a7b4c2;
+}
+.NavBar .List2 ul li {
+  margin-left: 4%;
+  font-size: 14px;
+  padding-top: 20px;
+  display: inline-block;
+  float: right;
+}
+.NavBar .List3 ul li {
+  margin-left: 4%;
+  font-size: 14px;
+  padding-top: 20px;
+  display: inline-block;
+  float: right;
+}
+.NavBar .List2 ul li:first-child {
+  background-color: #dd003f;
+
+  margin-left: 2%;
+  padding: 12px 2.3%;
+  margin-top: 8px;
+  border-radius: 20px;
+}
+.NavBar .List3 ul li:first-child {
+  background-color: #dd003f;
+  margin-left: 2%;
+  padding: 6px 0.7% 6px 6%;
+  margin-top: 8px;
+  border-radius: 20px;
+}
+.NavBar .List3 ul li i {
+  /*background-color: #dd003f;
+	
+	margin-left: 2%;
+	padding: 12px 2.3%;
+	margin-top: 8px;
+	border-radius: 20px;*/
+  margin-left: 1%;
+  font-size: 30px;
+  text-align: right;
+  /*margin-left: 100%;*/
+}
+.NavBar .List2 ul li button {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #fff;
+}
+.NavBar .List2 ul li button:hover {
+  cursor: pointer;
+}
+.NavBar .List3 ul li button {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #fff;
+}
+.NavBar .List3 ul li button:hover {
+  cursor: pointer;
+}
+.Search {
+  width: 75%;
+  margin-top: 30px;
+  margin: 30px auto 0 auto;
+}
+.Search select {
+  color: #fff;
+  background-color: #233a50;
+  height: 39.4px;
+  border: 2px solid black;
+  border-bottom: 2px solid black;
+  width: 9%;
+  float: left;
+}
+.Search input {
+  height: 35px;
+  background-color: #233a50;
+  border: 2px solid black;
+  border-bottom: 2px solid black;
+  width: 86.36%;
+  float: left;
+}
+.Search button {
+  background-color: #233a50;
+  border: 2px solid black;
+  border-bottom: 2px solid black;
+  float: right;
+  height: 39px;
+  width: 4%;
+}
+.SocialMedia {
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 35px;
+  margin-bottom: 25px;
+  float: right;
+  margin-right: 12.8%;
+}
+.SocialMedia i {
+  padding-left: 10px;
+  transition: 0.4s;
+}
+.SocialMedia i:hover {
+  cursor: pointer;
+  color: #dd003f;
+}
+
+/*Responcive NavBar Styles*/
+
+.NavBarResponsive {
+  padding-top: 30px;
+  display: none;
+}
+.NavBarResponsive .RespHead i {
+  transition-duration: 0.5s;
+  float: right;
+  color: #fff;
+  font-size: 25px;
+  padding: 15px 20px;
+  padding-right: 0;
+}
+.NavBarResponsive .RespHead i:hover {
+  color: #dd003f;
+}
+.NavBarResponsive .List1,
+.NavBarResponsive .List2,
+.NavBarResponsive .List3 {
+  padding: 0 40px;
+}
+.NavBarResponsive .AbsUL {
+  width: 75%;
+  border-radius: 30px;
+  padding: 20px 0;
+  position: absolute;
+  background-color: rgba(1, 13, 35, 0.75);
+  display: none;
+  margin-top: 30px;
+}
+.NavBarResponsive ul {
+  list-style: none;
+}
+.NavBarResponsive ul li {
+  padding: 15px 0;
+  padding-left: 20px;
+  border-bottom: 1px solid #a7b4c2;
+}
+.NavBarResponsive ul li a {
+  color: #a7b4c2;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+.NavBarResponsive .List2 ul li:first-child button {
+  color: #fff;
+  font-size: 18px;
+  font-family: sans-serif;
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+}
+.NavBarResponsive .List3 ul li:first-child button {
+  color: #fff;
+  font-size: 18px;
+  font-family: sans-serif;
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+}
+.NavBarResponsive .List2 ul li:last-child button {
+  background-color: #dd003f;
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: bold;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 20px;
+  font-size: 18px;
+}
+.NavBarResponsive .List3 ul li:last-child button {
+  background-color: #dd003f;
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: bold;
+  border: none;
+  padding: 6px 40px;
+  border-radius: 20px;
+  font-size: 25px;
+}
+.NavBarResponsive .List2 ul li:last-child {
+  border-bottom: none;
+}
+
+/*Media Queryf for Heder file*/
+@media screen and (max-width: 1280px) {
+  .NavBarResponsive {
+    display: block;
+  }
+  .NavBar {
+    display: none;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .Search input {
+    width: 85%;
+  }
+  .Search button {
+    width: 5.36%;
+  }
+}
+@media screen and (max-width: 850px) {
+  .Search input {
+    width: 84%;
+  }
+  .Search button {
+    width: 6.3%;
+  }
+}
+@media screen and (max-width: 760px) {
+  .Search input {
+    width: 83.5%;
+  }
+  .Search button {
+    width: 6.4%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .Search input {
+    width: 81%;
+  }
+  .Search button {
+    width: 9%;
+  }
+}
+@media screen and (max-width: 540px) {
+  .Search input {
+    width: 79.5%;
+  }
+  .Search button {
+    width: 10%;
+  }
+}
+@media screen and (max-width: 470px) {
+  .Search input {
+    width: 78%;
+  }
+  .Search button {
+    width: 11.5%;
+  }
+  .SocialMedia {
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 35px;
+    margin-bottom: 25px;
+    float: none;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 400px) {
+  .Search input {
+    width: 76%;
+  }
+  .Search button {
+    width: 13%;
+  }
+}
+@media screen and (max-width: 350px) {
+  .Search input {
+    width: 75%;
+  }
+  .Search button {
+    width: 14%;
+  }
+  .SocialMedia span {
+    display: none;
+  }
+  .SocialMedia i {
+    padding: 0 15px;
+  }
+}
+@media screen and (max-width: 300px) {
+  .Search input {
+    width: 73%;
+  }
+  .Search button {
+    width: 16%;
+  }
+}
+@media screen and (max-width: 275px) {
+  .Search input {
+    width: 71%;
+  }
+  .Search button {
+    width: 18%;
+  }
+  .SocialMedia i {
+    padding: 0 10px;
+  }
+}
+@media screen and (max-width: 265px) {
+  .Search input {
+    width: 70%;
+  }
+  .Search button {
+    width: 18%;
+  }
+}
